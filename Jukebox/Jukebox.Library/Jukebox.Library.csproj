@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EmbedIO" Version="3.3.3" />
+    <PackageReference Include="Plugin.MediaManager" Version="0.9.6" />
+    <PackageReference Include="Plugin.MediaManager.Forms" Version="0.9.6" />
+    <PackageReference Include="StandardStorage" Version="0.1.1" />
+  </ItemGroup>
+
+</Project>

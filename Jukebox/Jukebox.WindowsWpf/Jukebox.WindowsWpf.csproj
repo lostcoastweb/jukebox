@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Plugin.MediaManager" Version="0.9.6" />
+    <PackageReference Include="Plugin.MediaManager.Forms" Version="0.9.6" />
+    <PackageReference Include="StandardStorage" Version="0.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Jukebox.Library\Jukebox.Library.csproj" />
+  </ItemGroup>
+
+</Project>
