@@ -12,6 +12,8 @@
     <PackageReference Include="Plugin.MediaManager" Version="0.9.6" />
     <PackageReference Include="StandardStorage" Version="0.1.1" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.112" />
+    <PackageReference Include="TagLibSharp" Version="2.2.0" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.34" />
   </ItemGroup>
 
 </Project>

@@ -12,22 +12,22 @@ namespace Jukebox.Library
     {
         public void Start()
         {
-            Thread server = new Thread(new ThreadStart(RunWebServer));
-            server.Start();
+            //Thread server = new Thread(new ThreadStart(RunWebServer));
+            //server.Start();
         }
 
-        private async void RunWebServer()
-        {
-            using (var server = new WebServer("http://*:8080"))
-            {
-                //Assembly assembly = typeof(App).Assembly;
-                server.WithLocalSessionManager();
-                server.WithWebApi("/api/config", m => m.WithController(() => new ConfigController()));
-                server.WithWebApi("/api/fs", m => m.WithController(() => new FileSystemController()));
-                //server.WithWebApi("/api", m => m.WithController(() => new TestController()));
-                //server.WithEmbeddedResources("/", assembly, "EmbedIO.Forms.Sample.html");
-                await server.RunAsync();
-            }
-        }
+        //private async void RunWebServer()
+        //{
+        //    using (var server = new WebServer("http://*:8080"))
+        //    {
+        //        //Assembly assembly = typeof(App).Assembly;
+        //        server.WithLocalSessionManager();
+        //        server.WithWebApi("/api/config", m => m.WithController(() => new ConfigController()));
+        //        server.WithWebApi("/api/fs", m => m.WithController(() => new FileSystemController()));
+        //        //server.WithWebApi("/api", m => m.WithController(() => new TestController()));
+        //        //server.WithEmbeddedResources("/", assembly, "EmbedIO.Forms.Sample.html");
+        //        await server.RunAsync();
+        //    }
+        //}
     }
 }

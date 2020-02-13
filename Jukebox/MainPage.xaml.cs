@@ -38,8 +38,8 @@ namespace Jukebox
             //CrossMediaManager.Current.Play("http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
             //MediaServer mediaServer = new MediaServer();
             //mediaServer.PlayFile();
-            JukeboxServer server = new JukeboxServer();
-            server.Start();
+            //JukeboxServer server = new JukeboxServer();
+            //server.Start();
             Console.WriteLine("Done.");
         }
 
