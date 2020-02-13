@@ -19,14 +19,14 @@ namespace Jukebox.Library.Controllers
             _db = new JukeboxDb();
         }
 
-        [Route(HttpVerb.Get, "/music/paths")]
+        [Route(HttpVerbs.Get, "/music/paths")]
         public async Task<string> GetMusicPaths()
         {
             var result = await _db.Config.GetMusicRoutes();
             return result.Value;
         }
 
-        [Route(HttpVerb.Post, "/music/paths")]
+        [Route(HttpVerbs.Post, "/music/paths")]
         public async Task<string> PostMusicPaths()
         {
             var rawData = await HttpContext.GetRequestFormDataAsync();
@@ -34,7 +34,7 @@ namespace Jukebox.Library.Controllers
         }
 
 
-        [Route(HttpVerb.Post, "/login")]
+        [Route(HttpVerbs.Post, "/login")]
         public int GetTestResponse()
         {
             return -1;

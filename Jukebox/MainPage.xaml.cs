@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Jukebox.Library;
 using MediaManager;
+using Jukebox.ViewModels;
 
 namespace Jukebox
 {
@@ -24,7 +25,8 @@ namespace Jukebox
         public MainPage()
         {
             InitializeComponent();
-            //BindingContext = new ViewModel();
+            CrossMediaManager.Current.Init();
+            BindingContext = new MainPageViewModel();
             /*
              *
             List<string> folders = new List<string>();
@@ -33,11 +35,11 @@ namespace Jukebox
                 folders.Add(System.Environment.GetFolderPath(folder));
             }
             */
-            CrossMediaManager.Current.Play("https://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
+            //CrossMediaManager.Current.Play("http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
             //MediaServer mediaServer = new MediaServer();
             //mediaServer.PlayFile();
             JukeboxServer server = new JukeboxServer();
-            //server.Start();
+            server.Start();
             Console.WriteLine("Done.");
         }
 

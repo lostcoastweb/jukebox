@@ -49,7 +49,7 @@ namespace Jukebox
         public TestController() : base()
         { }
 
-        [Route(HttpVerb.Get, "/testresponse")]
+        [Route(HttpVerbs.Get, "/testresponse")]
         public int GetTestResponse()
         {
             return 12345;

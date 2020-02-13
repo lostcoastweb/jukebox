@@ -13,7 +13,7 @@ namespace Jukebox.Library.Controllers
         {
         }
 
-        [Route(HttpVerb.Post, "/login")]
+        [Route(HttpVerbs.Post, "/login")]
         public int GetTestResponse()
         {
             return -1;
