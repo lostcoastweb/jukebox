@@ -1,26 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Jukebox.MainPage">
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Button Grid.Row="0"
-                Grid.Column="0"
-                Command="{Binding PickMusicPathCommand}"
-                Text="Select Music Filder" />
-        <Button Grid.Row="1"
-                Grid.Column="0"
-                Command="{Binding PlayMusicCommand}"
-                Text="Play Song" />
-    </Grid>
-
-</ContentPage>
+                  xmlns:views="clr-namespace:Jukebox.Views"
+             x:Class="Jukebox.MainPage"
+                  Title="Jukebox"
+                  >
+    <MasterDetailPage.Master>
+        <views:MenuPage />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <views:HomePage />
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
