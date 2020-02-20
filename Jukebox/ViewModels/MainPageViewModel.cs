@@ -21,37 +21,41 @@ namespace Jukebox.ViewModels
         public ICommand ScanForMusicCommand { get; set; }
         public MainPageViewModel() : base()
         {
-            _musicFileExtensions.Add("mp3", "mp3");
+            _musicFileExtensions.Add(".mp3", ".mp3");
 
             PlayMusicCommand = new Command(async () => { await PlayMusic(); });
             PickMusicPathCommand = new Command(async () => { await PickMusicPath(); });
             ScanForMusicCommand = new Command(async () => { await ScanForMusic(); });
         }
 
-        private async Task GetFiles(string path)
+        private async Task<List<string>> GetFiles(string path)
         {
             List<string> files = new List<string>();
             await GetFiles(path, files);
+            return files;
         }
 
         private async Task GetFiles(string path, List<string> musicFiles)
         {
-            await new Task(async () => {
+            await Task.Run(async () => {
                 var files = Directory.GetFiles(path);
                 foreach (var file in files)
                 {
-                    if (Directory.Exists(file))
-                    {
-                        //recurse if directory
-                        await GetFiles(file, musicFiles);
-                    }
-                    else if (_musicFileExtensions.ContainsKey(Path.GetExtension(file)) == true)
+                    if (_musicFileExtensions.ContainsKey(Path.GetExtension(file)) == true)
                     {
                         musicFiles.Add(file);
                     }
                 }
+                var directories = Directory.GetDirectories(path);
+                foreach(var directory in directories)
+                {
+                    if (Directory.Exists(directory))
+                    {
+                        //recurse if directory
+                        await GetFiles(directory, musicFiles);
+                    }
+                }
             });
-            
         }
 
         private async Task ScanForMusic()
@@ -61,7 +65,10 @@ namespace Jukebox.ViewModels
             foreach(var folder in defaultMusicPaths)
             {
                 var path = System.Environment.GetFolderPath(folder);
+                var files = await GetFiles(path);
+                musicFiles.AddRange(files);
             }
+
         }
 
         private async Task PlayMusic()
