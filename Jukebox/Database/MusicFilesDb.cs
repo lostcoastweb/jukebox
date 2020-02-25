@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Jukebox.Database
 {
@@ -80,6 +81,68 @@ namespace Jukebox.Database
                 new { path = file.Path, album = file.Album, artist = file.Artist, title = file.Title, year = file.Year, track_number = file.TrackNumber });
             _db.Close();
             return affectedRows == 1;
+        }
+
+        public async Task<int> Add(IList<MusicFile> files)
+        {
+            if (files.Count < 1)
+            {
+                return 0;
+            }
+
+            _db.Open();
+            StringBuilder sql = new StringBuilder();
+            sql.Append(@"INSERT INTO music_files (
+                            path,
+                            album,
+                            artist,
+                            title,
+                            year,
+                            track_number
+                        )
+                        VALUES ");
+            int counter = 0;
+            DynamicParameters parameters = new DynamicParameters();
+            
+            foreach (MusicFile file in files)
+            {
+                Dictionary<string, string> values = new Dictionary<string, string>() {
+                    { string.Format("path{0}", counter), file.Path },
+                    { string.Format("album{0}", counter), file.Album },
+                    { string.Format("artist{0}", counter), file.Artist },
+                    { string.Format("title{0}", counter), file.Title },
+                    { string.Format("year{0}", counter), file.Year.ToString() },
+                    { string.Format("track_number{0}", counter), file.TrackNumber.ToString() }
+                };
+
+                sql.Append("(");
+                foreach(var kvp in values)
+                {
+                    sql.Append(kvp.Key + ", ");
+                    parameters.Add(kvp.Key, kvp.Value);
+                }
+
+                //remove last comma
+                sql.Remove(sql.Length - 2, 1);
+                sql.Append("), ");
+
+                //increment insert counter
+                counter++;
+            }
+
+            //remove last comma
+            sql.Remove(sql.Length - 2, 1);
+            int affectedRows = -1;
+            try
+            {
+                affectedRows = await _db.ExecuteAsync(sql.ToString(), parameters);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            _db.Close();
+            return affectedRows;
         }
     }
 }

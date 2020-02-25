@@ -1,7 +1,6 @@
 ﻿using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
-using Jukebox.Library.Controllers;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

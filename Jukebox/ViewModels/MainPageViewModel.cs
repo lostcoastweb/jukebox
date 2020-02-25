@@ -1,4 +1,6 @@
-﻿using MediaManager;
+﻿using Jukebox.Database;
+using Jukebox.Models;
+using MediaManager;
 using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using StandardStorage;
@@ -28,14 +30,14 @@ namespace Jukebox.ViewModels
             ScanForMusicCommand = new Command(async () => { await ScanForMusic(); });
         }
 
-        private async Task<List<string>> GetFiles(string path)
+        private async Task<List<MusicFile>> GetFiles(string path)
         {
-            List<string> files = new List<string>();
+            List<MusicFile> files = new List<MusicFile>();
             await GetFiles(path, files);
             return files;
         }
 
-        private async Task GetFiles(string path, List<string> musicFiles)
+        private async Task GetFiles(string path, List<MusicFile> musicFiles)
         {
             await Task.Run(async () => {
                 var files = Directory.GetFiles(path);
@@ -43,7 +45,18 @@ namespace Jukebox.ViewModels
                 {
                     if (_musicFileExtensions.ContainsKey(Path.GetExtension(file)) == true)
                     {
-                        musicFiles.Add(file);
+                        var tfile = TagLib.File.Create(file);
+
+                        MusicFile musicFile = new MusicFile() {
+                            Album = tfile.Tag.Album,
+                            Artist = tfile.Tag.FirstAlbumArtist,
+                            Path = file,
+                            Title = tfile.Tag.Title,
+                            TrackNumber = (int)tfile.Tag.Track,
+                            Year = (int)tfile.Tag.Year
+                            
+                        };
+                        musicFiles.Add(musicFile);
                     }
                 }
                 var directories = Directory.GetDirectories(path);
@@ -60,7 +73,7 @@ namespace Jukebox.ViewModels
 
         private async Task ScanForMusic()
         {
-            List<string> musicFiles = new List<string>();
+            List<MusicFile> musicFiles = new List<MusicFile>();
             System.Environment.SpecialFolder[] defaultMusicPaths = { System.Environment.SpecialFolder.CommonMusic, System.Environment.SpecialFolder.MyMusic};
             foreach(var folder in defaultMusicPaths)
             {
@@ -68,6 +81,9 @@ namespace Jukebox.ViewModels
                 var files = await GetFiles(path);
                 musicFiles.AddRange(files);
             }
+            JukeboxDb db = JukeboxDb.GetInstance();
+            await db.MusicFiles.Clear();
+            var numInserted = await db.MusicFiles.Add(musicFiles);
 
         }
 

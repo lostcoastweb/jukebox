@@ -15,7 +15,7 @@ namespace Jukebox.Controllers
         protected JukeboxDb _db;
         public ConfigController() : base()
         {
-            _db = new JukeboxDb();
+            _db = JukeboxDb.GetInstance();
         }
 
         [Route(HttpVerbs.Get, "/music/paths")]
