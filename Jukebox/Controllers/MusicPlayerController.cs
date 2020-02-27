@@ -2,10 +2,12 @@
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using Jukebox.Library;
+using MediaManager;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Jukebox.Controllers
 {
@@ -29,16 +31,25 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/play")]
-        public async Task<string> PlayMusic()
+        public string PlayMusic()
         {
-            //await _mediaServer.Play();
+            JukeboxMediaManager.GetInstance().Play();
+            
+            return "";
+        }
+
+        [Route(HttpVerbs.Get, "/play/{id}")]
+        public string PlayMusic(int id)
+        {
+            JukeboxMediaManager.GetInstance().Play();
+
             return "";
         }
 
         [Route(HttpVerbs.Get, "/pause")]
-        public async Task<string> PauseMusic()
+        public string PauseMusic()
         {
-            //await _mediaServer.Pause();
+            JukeboxMediaManager.GetInstance().Pause();
             return "";
         }
 

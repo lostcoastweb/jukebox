@@ -111,8 +111,8 @@ namespace Jukebox.ViewModels
 
         private async Task PlayMusic(string path)
         {
-            var musicPlayer = await MediaServer.GetInstance();
-            await musicPlayer.Play();
+            var musicPlayer = Library.JukeboxMediaManager.GetInstance();
+            musicPlayer.Play();
         }
 
         private async Task PickMusicPath()
