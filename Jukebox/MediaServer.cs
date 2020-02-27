@@ -1,8 +1,10 @@
-﻿using MediaManager;
+﻿using Jukebox.Models;
+using MediaManager;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Jukebox.Library
 {
@@ -14,9 +16,45 @@ namespace Jukebox.Library
         private bool IsAudioPlaying = false;
         private readonly object IsAudioPlayingLock = new object();
 
-        public MediaServer()
-        {
+        private Playlist _currentPlaylist = new Playlist();
 
+        private static MediaServer _instance;
+
+        private MediaServer()
+        {
+            
+        }
+
+        private async Task Init()
+        {
+            await CrossMediaManager.Current.Play("http://ia800806.us.archive.org/15/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
+            await CrossMediaManager.Current.Pause();
+            CrossMediaManager.Current.MediaItemFinished += SongDonePlaying;
+        }
+
+        private void SongDonePlaying(object sender, MediaManager.Media.MediaItemEventArgs e)
+        {
+            
+        }
+
+        public static async Task<MediaServer> GetInstance()
+        {
+            if(_instance == null)
+            {
+                _instance = new MediaServer();
+                await _instance.Init();
+            }
+            return _instance;
+        }
+
+        public async Task Play()
+        {
+            await CrossMediaManager.Current.Play();
+        }
+
+        public async Task Pause()
+        {
+            await CrossMediaManager.Current.Pause();
         }
 
         public async void PlayFile()

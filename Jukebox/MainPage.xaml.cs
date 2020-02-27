@@ -32,6 +32,7 @@ namespace Jukebox
             CrossMediaManager.Current.Init();
             BindingContext = new MainPageViewModel();
             MasterBehavior = MasterBehavior.Popover;
+            var player = MediaServer.GetInstance().Result;
             
 
             // MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
@@ -46,8 +47,8 @@ namespace Jukebox
             //CrossMediaManager.Current.Play("http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
             //MediaServer mediaServer = new MediaServer();
             //mediaServer.PlayFile();
-            //JukeboxServer server = new JukeboxServer();
-            //server.Start();
+            JukeboxWebServer server = new JukeboxWebServer();
+            server.Start();
             Console.WriteLine("Done.");
         }
 

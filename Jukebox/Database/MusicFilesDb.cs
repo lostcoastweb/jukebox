@@ -41,9 +41,11 @@ namespace Jukebox.Database
         {
             _db.Open();
             string sql = @"SELECT COUNT(id) FROM music_files";
-            var count = await _db.ExecuteAsync(sql);
+            var count = await _db.ExecuteScalarAsync(sql);
             _db.Close();
-            return count;
+            int count_int = -1;
+            Int32.TryParse(count.ToString(), out count_int);
+            return count_int;
         }
 
         public async Task<int> Clear()
@@ -77,8 +79,16 @@ namespace Jukebox.Database
                             @year,
                             @track_number
                         );";
-            var affectedRows = await _db.ExecuteAsync(sql,
+            var affectedRows = 0;
+            try
+            {
+                affectedRows = await _db.ExecuteAsync(sql,
                 new { path = file.Path, album = file.Album, artist = file.Artist, title = file.Title, year = file.Year, track_number = file.TrackNumber });
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
             _db.Close();
             return affectedRows == 1;
         }
@@ -118,7 +128,7 @@ namespace Jukebox.Database
                 sql.Append("(");
                 foreach(var kvp in values)
                 {
-                    sql.Append(kvp.Key + ", ");
+                    sql.Append(string.Format("@{0}, ", kvp.Key));
                     parameters.Add(kvp.Key, kvp.Value);
                 }
 
