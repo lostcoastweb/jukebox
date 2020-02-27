@@ -29,10 +29,9 @@ namespace Jukebox
         public MainPage()
         {
             InitializeComponent();
-            CrossMediaManager.Current.Init();
+
             BindingContext = new MainPageViewModel();
             MasterBehavior = MasterBehavior.Popover;
-            var player = MediaServer.GetInstance().Result;
             
 
             // MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);

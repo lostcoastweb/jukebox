@@ -1,4 +1,5 @@
 ﻿using Jukebox.Database;
+using Jukebox.Library;
 using Jukebox.Models;
 using MediaManager;
 using Plugin.FilePicker;
@@ -21,11 +22,13 @@ namespace Jukebox.ViewModels
         public ICommand PlayMusicCommand { get; set; }
         public ICommand PickMusicPathCommand { get; set; }
         public ICommand ScanForMusicCommand { get; set; }
+        public ICommand PauseMusicCommand { get; set; }
         public MainPageViewModel() : base()
         {
             _musicFileExtensions.Add(".mp3", ".mp3");
 
             PlayMusicCommand = new Command(async () => { await PlayMusic(); });
+            PauseMusicCommand = new Command(async () => { await PauseMusic(); });
             PickMusicPathCommand = new Command(async () => { await PickMusicPath(); });
             ScanForMusicCommand = new Command(async () => { await ScanForMusic(); });
         }
@@ -87,14 +90,29 @@ namespace Jukebox.ViewModels
 
         }
 
+        private async Task PauseMusic()
+        {
+            await CrossMediaManager.Current.Pause();
+        }
+
         private async Task PlayMusic()
         {
-            await CrossMediaManager.Current.Play("http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
+            if (CrossMediaManager.Current.Duration > new TimeSpan())
+            {
+                await CrossMediaManager.Current.Play();
+            }
+            else
+            {
+                await CrossMediaManager.Current.Play("http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
+            }
+            //var musicPlayer = await MediaServer.GetInstance();
+            //await musicPlayer.Play();
         }
 
         private async Task PlayMusic(string path)
         {
-            await CrossMediaManager.Current.Play(path);
+            var musicPlayer = await MediaServer.GetInstance();
+            await musicPlayer.Play();
         }
 
         private async Task PickMusicPath()

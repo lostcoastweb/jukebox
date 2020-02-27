@@ -11,13 +11,15 @@ namespace Jukebox.Controllers
 {
     public class MusicPlayerController : WebApiController
     {
-        private MediaServer _mediaServer;
+        //private MediaServer _mediaServer;
 
         public MusicPlayerController()
         {
+            /*
             var instance = MediaServer.GetInstance();
             instance.Wait();
             _mediaServer = instance.Result;
+            */
         }
 
         [Route(HttpVerbs.Get, "/")]
@@ -29,14 +31,14 @@ namespace Jukebox.Controllers
         [Route(HttpVerbs.Get, "/play")]
         public async Task<string> PlayMusic()
         {
-            await _mediaServer.Play();
+            //await _mediaServer.Play();
             return "";
         }
 
         [Route(HttpVerbs.Get, "/pause")]
         public async Task<string> PauseMusic()
         {
-            await _mediaServer.Pause();
+            //await _mediaServer.Pause();
             return "";
         }
 
