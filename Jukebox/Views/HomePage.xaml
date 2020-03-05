@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Button Command="{Binding PickMusicPathCommand}" Text="Select File"></Button>
-            <Button Command="{Binding ScanForMusicCommand}" Text="Scan For Music"></Button>
+            <Button Command="{Binding MediaManager.ScanForMusicCommand}" Text="Scan For Music"></Button>
             <Button Command="{Binding PlayMusicCommand}" Text="Play"></Button>
             <Button Command="{Binding PauseMusicCommand}" Text="Pause"></Button>
         </StackLayout>

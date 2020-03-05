@@ -37,6 +37,26 @@ namespace Jukebox.Database
             return items;
         }
 
+        public async Task<IEnumerable<MusicFile>> All(int limit, int offset = 0)
+        {
+            _db.Open();
+            string sql = @"SELECT 
+                           id As Id,
+                            path as Path,
+                            album as Album,
+                            artist AS Artist,
+                            title AS Title,
+                            year AS Year,
+                            track_number AS TrackNumber
+                           FROM music_files 
+                           LIMIT @limit
+                           OFFSET @offset";
+            var result = await _db.QueryAsync<MusicFile>(sql, new { limit = limit, offset = offset });
+            var items = result.ToList();
+            _db.Close();
+            return items;
+        }
+
         public async Task<int> Count()
         {
             _db.Open();

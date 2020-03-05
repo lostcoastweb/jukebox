@@ -17,77 +17,16 @@ namespace Jukebox.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private Dictionary<string, string> _musicFileExtensions = new Dictionary<string, string>();
-        
+        public MediaManagerViewModel MediaManager {get;set;}
         public ICommand PlayMusicCommand { get; set; }
         public ICommand PickMusicPathCommand { get; set; }
-        public ICommand ScanForMusicCommand { get; set; }
         public ICommand PauseMusicCommand { get; set; }
         public MainPageViewModel() : base()
         {
-            _musicFileExtensions.Add(".mp3", ".mp3");
-
+            MediaManager = new MediaManagerViewModel();
             PlayMusicCommand = new Command(async () => { await PlayMusic(); });
             PauseMusicCommand = new Command(async () => { await PauseMusic(); });
             PickMusicPathCommand = new Command(async () => { await PickMusicPath(); });
-            ScanForMusicCommand = new Command(async () => { await ScanForMusic(); });
-        }
-
-        private async Task<List<MusicFile>> GetFiles(string path)
-        {
-            List<MusicFile> files = new List<MusicFile>();
-            await GetFiles(path, files);
-            return files;
-        }
-
-        private async Task GetFiles(string path, List<MusicFile> musicFiles)
-        {
-            await Task.Run(async () => {
-                var files = Directory.GetFiles(path);
-                foreach (var file in files)
-                {
-                    if (_musicFileExtensions.ContainsKey(Path.GetExtension(file)) == true)
-                    {
-                        var tfile = TagLib.File.Create(file);
-
-                        MusicFile musicFile = new MusicFile() {
-                            Album = tfile.Tag.Album,
-                            Artist = tfile.Tag.FirstAlbumArtist,
-                            Path = file,
-                            Title = tfile.Tag.Title,
-                            TrackNumber = (int)tfile.Tag.Track,
-                            Year = (int)tfile.Tag.Year
-                            
-                        };
-                        musicFiles.Add(musicFile);
-                    }
-                }
-                var directories = Directory.GetDirectories(path);
-                foreach(var directory in directories)
-                {
-                    if (Directory.Exists(directory))
-                    {
-                        //recurse if directory
-                        await GetFiles(directory, musicFiles);
-                    }
-                }
-            });
-        }
-
-        private async Task ScanForMusic()
-        {
-            List<MusicFile> musicFiles = new List<MusicFile>();
-            System.Environment.SpecialFolder[] defaultMusicPaths = { System.Environment.SpecialFolder.CommonMusic, System.Environment.SpecialFolder.MyMusic};
-            foreach(var folder in defaultMusicPaths)
-            {
-                var path = System.Environment.GetFolderPath(folder);
-                var files = await GetFiles(path);
-                musicFiles.AddRange(files);
-            }
-            JukeboxDb db = JukeboxDb.GetInstance();
-            await db.MusicFiles.Clear();
-            var numInserted = await db.MusicFiles.Add(musicFiles);
-
         }
 
         private async Task PauseMusic()
