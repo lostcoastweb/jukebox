@@ -6,20 +6,24 @@ import Col from 'react-bootstrap/Col';
 import '../../App.css';
 const axios = require('axios').default;
 
+ function play(){
+     axios.get('http://localhost:8080/api/music/play')
+        .catch(function (){console.log("error play")});
+    console.log("pressed play");
 
+}
+
+ function pause(){
+     axios.get('http://localhost:8080/api/music/pause')
+        .then((response) => {
+           console.log(response.data + "pause")
+         }
+      ).catch(function (error){console.log("error pause")});
+    console.log("pressed pause");
+
+}
 
 function MusicPlayer() {
-    axios.post('/pause')
-        .then((response) => {
-           console.log(response.data)
-         }
-      );
-    axios.post('/play')
-        .then((response) => {
-           console.log(response.data)
-         }
-      );
-
 
     return(
         <>
@@ -39,9 +43,9 @@ function MusicPlayer() {
 
                         <Button className="m-3 prevBtn playerBtn"></Button>
                    
-                        <Button className="m-3 pauseBtn playerBtn"></Button>
+                        <Button className="m-3 pauseBtn playerBtn" onClick={pause}></Button>
                       
-                        <Button className="m-3 playBtn playerBtn"></Button>
+                        <Button className="m-3 playBtn playerBtn" onClick={play}></Button>
                     
                         <Button className="m-3 nextBtn playerBtn"></Button>
                 
