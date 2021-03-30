@@ -29,4 +29,4 @@ jobs:
     - name: Build Unit Tests
       run: dotnet build Jukebox.UnitTests --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test Jukebox.UnitTests --no-build --verbosity normal
