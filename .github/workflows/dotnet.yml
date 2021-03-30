@@ -19,6 +19,11 @@ jobs:
         dotnet-version: 3.1.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Create database
+      uses: canastro/copy-action@0.0.2
+      with:
+        source: "./Jukebox/jukebox_blank.db"
+        target: "./Jukebox/jukebox.db"
     - name: Build Library
       run: dotnet build Jukebox --no-restore
     - name: Build Unit Tests
