@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jukebox", "Jukebox\Jukebox.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jukebox.Android", "Jukebox.Android\Jukebox.Android.csproj", "{6F43BFBC-C7CA-4D68-B62D-75F7A2FFC4C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jukebox.UnitTests", "Jukebox.UnitTests\Jukebox.UnitTests.csproj", "{208D6A31-84D5-4526-B27B-CD8D1D06C311}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,30 @@ Global
 		{6F43BFBC-C7CA-4D68-B62D-75F7A2FFC4C8}.Release|x86.ActiveCfg = Release|Any CPU
 		{6F43BFBC-C7CA-4D68-B62D-75F7A2FFC4C8}.Release|x86.Build.0 = Release|Any CPU
 		{6F43BFBC-C7CA-4D68-B62D-75F7A2FFC4C8}.Release|x86.Deploy.0 = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|ARM.Build.0 = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|x64.Build.0 = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Debug|x86.Build.0 = Debug|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|ARM.ActiveCfg = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|ARM.Build.0 = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|iPhone.Build.0 = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|x64.ActiveCfg = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|x64.Build.0 = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|x86.ActiveCfg = Release|Any CPU
+		{208D6A31-84D5-4526-B27B-CD8D1D06C311}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
