@@ -1,4 +1,4 @@
-.App {
+.centered {
   text-align: center;
 }
 
@@ -35,4 +35,67 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.playBtn{
+  background-image: url( '../src/icons/play-solid.svg' );
+  background-repeat: no-repeat;
+  height: 45px;  
+  width: 45px;
+  background-position:  center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none  !important;
+  box-shadow: none !important;
+}
+
+.pauseBtn{
+  background-image: url( '../src/icons/pause-solid.svg' );
+  background-repeat: no-repeat;
+  height: 45px;  
+  width: 45px;
+  background-position:  center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none  !important;
+  box-shadow: none !important;
+}
+
+.prevBtn{
+  background-image: url( '../src/icons/backward-solid.svg' );
+  background-repeat: no-repeat;
+  height: 45px;  
+  width: 45px;
+  background-position:  center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none  !important;
+  box-shadow: none !important;
+}
+
+.nextBtn{
+  background-image: url( '../src/icons/forward-solid.svg' );
+  background-repeat: no-repeat;
+  height: 45px;  
+  width: 45px;
+  background-position:  center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none  !important;
+  box-shadow: none !important;
+}
+
+.playerBtn:active{
+  opacity: 25% !important;
+}
+
+.player-border{
+  border: 5px solid black;
+  border-radius: 2rem;
+}
+
+.songTitle{
+
+  padding-right: .4rem;
+  padding-left: .4rem;
 }
