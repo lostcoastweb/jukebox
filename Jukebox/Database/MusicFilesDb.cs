@@ -57,6 +57,18 @@ namespace Jukebox.Database
             return items;
         }
 
+        public async Task<IEnumerable<MusicFile>> All(string sql, int limit, int offset = 0)
+        {
+            _db.Open();
+            string run_sql = sql + @" 
+                           LIMIT @limit
+                           OFFSET @offset";
+            var result = await _db.QueryAsync<MusicFile>(run_sql, new { limit = limit, offset = offset });
+            var items = result.ToList();
+            _db.Close();
+            return items;
+        }
+
         public async Task<int> Count()
         {
             _db.Open();

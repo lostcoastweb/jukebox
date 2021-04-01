@@ -25,5 +25,23 @@ namespace Jukebox.Controllers
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             return json;
         }
+
+        public async Task<string> SearchMusic(string search, int limit = 100, int offset = 0) {
+            string sql = @"SELECT
+                           id As Id,
+                           path as Path,
+                           album as Album,
+                           artist AS Artist,
+                           title AS Title,
+                           year AS Year,
+                           track_number AS TrackNumber
+                           FROM music_files
+                           WHERE title like " + search
+                         +"OR WHERE artist like " + search
+                         +"OR WHERE album like " + search;
+
+            var data = await _db.MusicFiles.All(sql, limit, offset);
+            return JsonConvert.SerializeObject(data, Formatting.Indented);
+        }
     }
 }
