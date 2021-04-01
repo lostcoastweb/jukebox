@@ -6,14 +6,15 @@ import Col from 'react-bootstrap/Col';
 import '../../App.css';
 const axios = require('axios').default;
 
- function play(){
+ export function play(){
      axios.get('http://localhost:8080/api/music/play')
         .catch(function (){console.log("error play")});
     console.log("pressed play");
+    return 1;
 
 }
 
- function pause(){
+ export function pause(){
      axios.get('http://localhost:8080/api/music/pause')
         .then((response) => {
            console.log(response.data + "pause")
