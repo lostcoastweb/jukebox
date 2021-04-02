@@ -27,6 +27,9 @@ afterEach(() => {
 it('play test', () => {
   expect(play()).toEqual(1);
 });
+it('pause test', () => {
+  expect(play()).toEqual(1);
+});
 
 it("renders Music Player", () => {
   act(() => {
