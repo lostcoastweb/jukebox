@@ -4,11 +4,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import '../../App.css';
+import { useState } from 'react';
 const axios = require('axios').default;
 
 
 
- export function play(){
+ export function play(event){
+     event.preventDefault();
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
 
@@ -22,7 +24,8 @@ const axios = require('axios').default;
     return 1;
     }
 
- export function pause(){
+ export function pause(event){
+     event.preventDefault();
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
     
@@ -38,8 +41,32 @@ const axios = require('axios').default;
     console.log("pressed pause");
 
 }
+ export function playNext(event){
+     event.preventDefault();
+   
+     axios.get('http://localhost:8080/api/music/next')
+        .then((response) => {
+           console.log(response.data + "next")
+         }
+      ).catch(function (error){console.log("error next")});
+    console.log("pressed next");
+
+}
+ export function playPrev(event){
+     event.preventDefault();
+  
+
+     axios.get('http://localhost:8080/api/music/prev')
+        .then((response) => {
+           console.log(response.data + "prev")
+         }
+      ).catch(function (error){console.log("error prev")});
+    console.log("pressed prev");
+
+}
 
 function MusicPlayer() {
+
 
     return(
         <>
@@ -57,13 +84,13 @@ function MusicPlayer() {
                 {/* Music Player Buttons */}
                 <Row className="justify-content-center m-5">
 
-                        <Button className="m-3 prevBtn playerBtn"></Button>
+                        <Button className="m-3 prevBtn playerBtn"  onClick={e=>playPrev(e)} id="prevBtn" ></Button>
                    
-                        <Button className="m-3 pauseBtn hidden playerBtn" onClick={pause} id="pauseBtn"></Button>
+                        <Button className="m-3 pauseBtn hidden playerBtn" alt="pause" onClick={e=>pause(e)} id="pauseBtn"></Button>
                       
-                        <Button className="m-3 playBtn playerBtn" id="playBtn" onClick={play}></Button>
+                        <Button className="m-3 playBtn playerBtn" alt="play" id="playBtn" onClick={e=>play(e)}></Button>
                     
-                        <Button className="m-3 nextBtn playerBtn"></Button>
+                        <Button className="m-3 nextBtn playerBtn"  onClick={e=>playNext(e)} id="nextBtn"></Button>
                 
                 </Row>
            

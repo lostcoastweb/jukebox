@@ -13,20 +13,45 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
+
+
 namespace Jukebox.ViewModels
 {
+
     public class MainPageViewModel : ViewModelBase
     {
-        public MediaManagerViewModel MediaManager {get;set;}
+        public MediaManagerViewModel MediaManager { get; set; }
         public ICommand PlayMusicCommand { get; set; }
         public ICommand PickMusicPathCommand { get; set; }
         public ICommand PauseMusicCommand { get; set; }
+        public ICommand NextSongCommand { get; set; }
+        public ICommand PrevSongCommand { get; set; }
+
+        public IList<string> myPlaylist => new[]{
+            "C:/Users/dbjer/Music/playlist/track1.mp3",
+            "C:/Users/dbjer/Music/playlist/track2.mp3",
+            "C:/Users/dbjer/Music/playlist/track3.mp3",
+            "C:/Users/dbjer/Music/playlist/track4.mp3",
+        };
+
         public MainPageViewModel() : base()
         {
             MediaManager = new MediaManagerViewModel();
             PlayMusicCommand = new Command(async () => { await PlayMusic(); });
             PauseMusicCommand = new Command(async () => { await PauseMusic(); });
+            NextSongCommand = new Command(async () => { await NextSong(); });
+            PrevSongCommand = new Command(async () => { await PrevSong(); });
             PickMusicPathCommand = new Command(async () => { await PickMusicPath(); });
+
+        }
+
+        private async Task NextSong()
+        {
+            await CrossMediaManager.Current.PlayNext();
+        }
+        private async Task PrevSong()
+        {
+            await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
         }
 
         private async Task PauseMusic()
@@ -36,14 +61,16 @@ namespace Jukebox.ViewModels
 
         private async Task PlayMusic()
         {
+
             if (CrossMediaManager.Current.Duration > new TimeSpan())
             {
                 await CrossMediaManager.Current.Play();
             }
             else
             {
-                await CrossMediaManager.Current.Play("http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3");
+                await CrossMediaManager.Current.Play(myPlaylist);
             }
+            //http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3
             //var musicPlayer = await MediaServer.GetInstance();
             //await musicPlayer.Play();
         }

@@ -20,9 +20,33 @@ namespace Jukebox.Library
         private Playlist _currentPlaylist = new Playlist();
         private static JukeboxMediaManager _instance;
 
+        //protected Playlist activePlaylist = new Playlist();
+
+
+        
+
         private JukeboxMediaManager()
         {
-            
+           /* activePlaylist.Songs.Add(new MusicFile
+            {
+                Album = "foo",
+                Artist = "bar",
+                Path = "C:/Users/dbjer/Music/playlist/track1.mp3"
+            });
+            activePlaylist.Songs.Add(new MusicFile
+            {
+                Album = "foo",
+                Artist = "bar",
+                Path = "C:/Users/dbjer/Music/playlist/track2.mp3"
+            });
+            activePlaylist.Songs.Add(new MusicFile
+            {
+                Album = "foo",
+                Artist = "bar",
+                Path = "C:/Users/dbjer/Music/playlist/track3.mp3"
+            });
+            activePlaylist.CurrentSongIndex = 1;*/
+
         }
 
         public static JukeboxMediaManager GetInstance(IMediaManager musicContext = null)
@@ -73,6 +97,21 @@ namespace Jukebox.Library
             });
         }
 
+        public void PlayNext()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                await CrossMediaManager.Current.PlayNext();
+            });
+        }
+
+        public void PlayPrev()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
+            });
+        }
 
         //public void Start()
         //{
@@ -82,7 +121,7 @@ namespace Jukebox.Library
         //        Thread player = new Thread(new ThreadStart(MediaPlayerLoop));
         //        player.Start();
         //    }
-            
+
         //}
 
         //private void MediaPlayerLoop()

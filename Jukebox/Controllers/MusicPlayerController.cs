@@ -62,12 +62,14 @@ namespace Jukebox.Controllers
         [Route(HttpVerbs.Get, "/next")]
         public async Task<string> NextTrack()
         {
+            JukeboxMediaManager.GetInstance().PlayNext();
             return "";
         }
 
         [Route(HttpVerbs.Get, "/prev")]
         public async Task<string> PreviousTrack()
         {
+            JukeboxMediaManager.GetInstance().PlayPrev();
             return "";
         }
     }

@@ -25,8 +25,13 @@ afterEach(() => {
 });
 
 it('play test', () => {
-  expect(play()).toEqual(1);
+    render(<App />, container);
+    fireEvent.click(screen.getByAltText('play'));
+    await waitFor(() => screen.getByRole('heading'))
+    expect(screen.getByRole('playBtn').toHaveAttribute('disabled'));
+
 });
+
 it('pause test', () => {
   expect(play()).toEqual(1);
 });
