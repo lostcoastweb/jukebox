@@ -26,6 +26,7 @@ namespace Jukebox.Controllers
             return json;
         }
 
+        [Route(HttpVerbs.Get, "/search/{search}")]
         public async Task<string> SearchMusic(string search, int limit = 100, int offset = 0) {
             var data = await _db.MusicFiles.All(search, limit, offset);
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
