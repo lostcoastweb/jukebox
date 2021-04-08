@@ -57,7 +57,7 @@ namespace Jukebox.Database
             return items;
         }
 
-        public async Task<IEnumerable<MusicFile>> All(string search, int limit, int offset = 0)
+        public async Task<IEnumerable<MusicFile>> Search(string search, int limit, int offset = 0)
         {
             _db.Open();
             string sql = @"SELECT 
@@ -69,9 +69,9 @@ namespace Jukebox.Database
                            year AS Year,
                            track_number AS TrackNumber
                            FROM music_files 
-                           WHERE instr(title, @search)>0
-                           OR instr(artist, @search)>0
-                           OR instr(album, @search)>0
+                           WHERE instr(LOWER(title), @search)>0
+                           OR instr(LOWER(artist), @search)>0
+                           OR instr(LOWER(album), @search)>0
                            LIMIT @limit
                            OFFSET @offset";
             try
