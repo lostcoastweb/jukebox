@@ -2,9 +2,12 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import config from '../../appsettings.json'
 
 import '../../App.css';
 import { useState } from 'react';
+const localIpUrl = require('local-ip-url');
+
 const axios = require('axios').default;
 
 
@@ -17,8 +20,9 @@ const axios = require('axios').default;
      playBtn.classList.add('hidden');
      playBtn.classList.remove('show');
      pauseBtn.classList.add('show');
-
-     axios.get('http://localhost:8080/api/music/play')
+     console.log(localIpUrl());
+ 
+     axios.get("http://"+"192.168.0.24"+ ":8080"+ config.Routes.Play)
         .catch(function (){console.log("error play")});
     console.log("pressed play");
     return 1;
@@ -33,18 +37,17 @@ const axios = require('axios').default;
      pauseBtn.classList.add('hidden');
      playBtn.classList.add('show');
 
-     axios.get('http://localhost:8080/api/music/pause')
+     axios.get("http://"+localIpUrl()+config.Routes.Pause)
         .then((response) => {
            console.log(response.data + "pause")
          }
       ).catch(function (error){console.log("error pause")});
     console.log("pressed pause");
-
 }
  export function playNext(event){
      event.preventDefault();
    
-     axios.get('http://localhost:8080/api/music/next')
+     axios.get(config.Routes.Next)
         .then((response) => {
            console.log(response.data + "next")
          }
@@ -54,9 +57,8 @@ const axios = require('axios').default;
 }
  export function playPrev(event){
      event.preventDefault();
-  
 
-     axios.get('http://localhost:8080/api/music/prev')
+     axios.get(config.Routes.Prev)
         .then((response) => {
            console.log(response.data + "prev")
          }

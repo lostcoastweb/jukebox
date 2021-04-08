@@ -22,30 +22,9 @@ namespace Jukebox.Library
 
         //protected Playlist activePlaylist = new Playlist();
 
-
-        
-
         private JukeboxMediaManager()
         {
-           /* activePlaylist.Songs.Add(new MusicFile
-            {
-                Album = "foo",
-                Artist = "bar",
-                Path = "C:/Users/dbjer/Music/playlist/track1.mp3"
-            });
-            activePlaylist.Songs.Add(new MusicFile
-            {
-                Album = "foo",
-                Artist = "bar",
-                Path = "C:/Users/dbjer/Music/playlist/track2.mp3"
-            });
-            activePlaylist.Songs.Add(new MusicFile
-            {
-                Album = "foo",
-                Artist = "bar",
-                Path = "C:/Users/dbjer/Music/playlist/track3.mp3"
-            });
-            activePlaylist.CurrentSongIndex = 1;*/
+          
 
         }
 

@@ -1,10 +1,6 @@
 {
   "name": "jukebox.web-player",
   "version": "0.1.0",
-
-  "proxy":"http://localhost:8080",
-
-
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
@@ -41,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "local-ip-url": "^1.0.3"
   }
 }

@@ -27,12 +27,9 @@ namespace Jukebox.ViewModels
         public ICommand NextSongCommand { get; set; }
         public ICommand PrevSongCommand { get; set; }
 
-        public IList<string> myPlaylist => new[]{
-            "C:/Users/dbjer/Music/playlist/track1.mp3",
-            "C:/Users/dbjer/Music/playlist/track2.mp3",
-            "C:/Users/dbjer/Music/playlist/track3.mp3",
-            "C:/Users/dbjer/Music/playlist/track4.mp3",
-        };
+        protected Playlist activePlaylist = new Playlist();
+
+        public IList<string> myPlaylist;
 
         public MainPageViewModel() : base()
         {
@@ -42,6 +39,44 @@ namespace Jukebox.ViewModels
             NextSongCommand = new Command(async () => { await NextSong(); });
             PrevSongCommand = new Command(async () => { await PrevSong(); });
             PickMusicPathCommand = new Command(async () => { await PickMusicPath(); });
+
+            
+            activePlaylist.Songs.Add(new MusicFile
+            {
+                Id=1,
+                Year=2000,
+                TrackNumber=1,
+                Album = "album1",
+                Title = "song1",
+                Artist = "artist1",
+                Path = "C:/Users/dbjer/Music/playlist/track1.mp3"
+            });
+            activePlaylist.Songs.Add(new MusicFile
+            {
+                Id = 2,
+                Year = 2000,
+                TrackNumber = 2,
+                Album = "album2",
+                Title = "song2",
+                Artist = "artist2",
+                Path = "C:/Users/dbjer/Music/playlist/track2.mp3"
+            });
+            activePlaylist.Songs.Add(new MusicFile
+            {
+                Id = 3,
+                Year = 2000,
+                TrackNumber = 3,
+                Album = "album3",
+                Title = "song3",
+                Artist = "artist3",
+                Path = "C:/Users/dbjer/Music/playlist/track3.mp3"
+            });
+            
+            myPlaylist = new string[] { activePlaylist.Songs[0].Path,
+                                        activePlaylist.Songs[1].Path,
+                                        activePlaylist.Songs[2].Path};
+          
+
 
         }
 

@@ -16,5 +16,13 @@ namespace Jukebox.Models
                 return Songs[CurrentSongIndex];
             }
         }
+        public Playlist()
+        {
+            Name = "";
+            Songs = new List<MusicFile> { };
+            CurrentSongIndex = 0;
+           
+
+        }
     }
 }
