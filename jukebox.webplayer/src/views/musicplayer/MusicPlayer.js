@@ -16,15 +16,17 @@ const axios = require('axios').default;
      event.preventDefault();
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
+   
 
      playBtn.classList.add('hidden');
      playBtn.classList.remove('show');
      pauseBtn.classList.add('show');
      console.log(localIpUrl());
  
-     axios.get("http://"+"192.168.0.24"+ ":8080"+ config.Routes.Play)
+     axios.get(config.Routes.Play)
+     .then((response)=>{console.log(response.data)})
         .catch(function (){console.log("error play")});
-    console.log("pressed play");
+    console.log("pressed play ");
     return 1;
     }
 
@@ -37,7 +39,7 @@ const axios = require('axios').default;
      pauseBtn.classList.add('hidden');
      playBtn.classList.add('show');
 
-     axios.get("http://"+localIpUrl()+config.Routes.Pause)
+     axios.get(config.Routes.Pause)
         .then((response) => {
            console.log(response.data + "pause")
          }
@@ -77,9 +79,9 @@ function MusicPlayer() {
                 {/* Song Information */}
                 <Row className="justify-content-center m-5">
                     <div className="songTitle">
-                        Title - song 1
+                        <div id="titleInfo">Track - song 1</div>
                         <br></br>
-                        Artist - someone
+                        <div id="artistInfo">Artist - someones</div>
                     </div>   
                 </Row>
 

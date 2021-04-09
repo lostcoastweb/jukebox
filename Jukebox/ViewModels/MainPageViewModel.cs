@@ -103,7 +103,7 @@ namespace Jukebox.ViewModels
             }
             else
             {
-                await CrossMediaManager.Current.Play(myPlaylist);
+                await CrossMediaManager.Current.Play(activePlaylist.AllMusicFilePath());
             }
             //http://ia800605.us.archive.org/32/items/Mp3Playlist_555/AaronNeville-CrazyLove.mp3
             //var musicPlayer = await MediaServer.GetInstance();

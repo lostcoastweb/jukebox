@@ -41,7 +41,7 @@ namespace Jukebox.Controllers
         {
             JukeboxMediaManager.GetInstance().Play();
             
-            return "";
+            return "play";
         }
 
         [Route(HttpVerbs.Get, "/play/{id}")]
