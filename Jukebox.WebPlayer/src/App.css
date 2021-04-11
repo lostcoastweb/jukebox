@@ -54,6 +54,7 @@
   border: none !important;
   outline: none  !important;
   box-shadow: none !important;
+  
 }
 
 .pauseBtn{
@@ -66,6 +67,7 @@
   border: none !important;
   outline: none  !important;
   box-shadow: none !important;
+  
 }
 
 .prevBtn{
@@ -91,6 +93,41 @@
   outline: none  !important;
   box-shadow: none !important;
 }
+.volDownBtn{
+  background-image: url( '../src/icons/volume-down-solid.svg' );
+  background-repeat: no-repeat;
+  height: 45px;  
+  width: 45px;
+  background-position:  center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none  !important;
+  box-shadow: none !important;
+}
+.volUpBtn{
+  background-image: url( '../src/icons/volume-up-solid.svg' );
+  background-repeat: no-repeat;
+  height: 45px;  
+  width: 45px;
+  background-position:  center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none  !important;
+  box-shadow: none !important;
+}
+.muteBtn{
+  background-image: url( '../src/icons/volume-mute-solid.svg' );
+  background-repeat: no-repeat;
+  height: 45px;  
+  width: 45px;
+  background-position:  center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none  !important;
+  box-shadow: none !important;
+}
+
+
 
 .playerBtn:active{
   opacity: 25% !important;
