@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace Jukebox.Library
 {
     class JukeboxMediaManager
@@ -89,6 +90,39 @@ namespace Jukebox.Library
             Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
             {
                 await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
+            });
+        }
+
+        public void VolumeDown()
+        {
+            
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () => {
+
+                await Task.Run(() => VolDown());
+            }
+            );
+        }
+
+        public void VolDown()
+        {
+            CrossMediaManager.Current.Volume.CurrentVolume =0;
+        }
+
+        public void VolumeUp()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                
+
+            });
+        }
+
+      
+        public void Mute()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                
             });
         }
 

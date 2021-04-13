@@ -130,7 +130,7 @@ function MusicPlayer() {
 
                       
                         <Button className="m-3 volDownBtn playerBtn"  onClick={e=>volDown(e)} id="volDown"></Button>
-                        <Button className="m-3 volUpBtn playerBtn"  onClick={e=>volUp(e)} id="volDown"></Button>
+                        <Button className="m-3 volUpBtn playerBtn"  onClick={e=>volUp(e)} id="volUp"></Button>
                         <Button className="m-3 muteBtn playerBtn"  onClick={e=>mute(e)} id="mute"></Button>  
                         
                 

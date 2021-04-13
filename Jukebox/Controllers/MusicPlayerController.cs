@@ -17,6 +17,8 @@ namespace Jukebox.Controllers
     {
         protected JukeboxDb _db;
 
+      
+
         public MusicPlayerController()
         {
             _db = JukeboxDb.GetInstance();
@@ -70,6 +72,27 @@ namespace Jukebox.Controllers
         public async Task<string> PreviousTrack()
         {
             JukeboxMediaManager.GetInstance().PlayPrev();
+            return "";
+        }
+
+        [Route(HttpVerbs.Get, "/volDown")]
+        public async Task<string> VolumeDown()
+        {
+            JukeboxMediaManager.GetInstance().VolumeDown();
+            return "";
+        }
+
+        [Route(HttpVerbs.Get, "/volUp")]
+        public async Task<string> VolumeUp()
+        {
+            JukeboxMediaManager.GetInstance().VolumeUp();
+            return "";
+        }
+
+        [Route(HttpVerbs.Get, "/mute")]
+        public async Task<string> Mute()
+        {
+            JukeboxMediaManager.GetInstance().Mute();
             return "";
         }
     }
