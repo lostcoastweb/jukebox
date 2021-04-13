@@ -85,6 +85,20 @@
   box-shadow: none !important;
 }
 
+/* svg taken from: https://icons.getbootstrap.com/icons/plus/ */
+.plusBtn {
+  background-image: url( '../src/icons/plus-solid.svg');
+  background-repeat: no-repeat;
+  height: 45px;
+  width: 45px;
+  background-size: 67px 67px;
+  background-position: center;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .playerBtn:active{
   opacity: 25% !important;
 }
@@ -92,6 +106,7 @@
 .player-border{
   border: 5px solid black;
   border-radius: 2rem;
+  margin: 20px;
 }
 
 .songTitle{
