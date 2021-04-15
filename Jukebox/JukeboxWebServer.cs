@@ -23,10 +23,11 @@ namespace Jukebox
             {
                 //Assembly assembly = typeof(App).Assembly;
                 server.WithLocalSessionManager();
+                server.WithCors();
                 server.WithWebApi("/api/config", m => m.WithController(() => new ConfigController()));
                 server.WithWebApi("/api/fs", m => m.WithController(() => new FileSystemController()));
                 server.WithWebApi("/api/music", m => m.WithController(() => new MusicPlayerController()));
-                server.WithCors();
+                server.WithWebApi("/api/media", m => m.WithController(() => new MediaManagerController()));
                 //server.WithWebApi("/api", m => m.WithController(() => new TestController()));
                 //server.WithEmbeddedResources("/", assembly, "EmbedIO.Forms.Sample.html");
                 await server.RunAsync();
