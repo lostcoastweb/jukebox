@@ -23,6 +23,7 @@ namespace Jukebox
             {
                 //Assembly assembly = typeof(App).Assembly;
                 server.WithLocalSessionManager();
+                server.WithCors();
                 server.WithWebApi("/api/config", m => m.WithController(() => new ConfigController()));
                 server.WithWebApi("/api/fs", m => m.WithController(() => new FileSystemController()));
                 server.WithWebApi("/api/music", m => m.WithController(() => new MusicPlayerController()));
