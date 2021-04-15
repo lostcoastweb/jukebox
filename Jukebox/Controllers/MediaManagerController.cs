@@ -25,5 +25,12 @@ namespace Jukebox.Controllers
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             return json;
         }
+
+        [Route(HttpVerbs.Get, "/playlist/new")]
+        public async Task<string> NewPlaylist()
+        {
+            var json = JsonConvert.SerializeObject("", Formatting.Indented);
+            return json;
+        }
     }
 }

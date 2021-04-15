@@ -42,11 +42,14 @@ const previousPlaylist = (setPlaylist) => {
         }).catch((err) => { console.log("Failed to start previous playlist: ", err) });
 };
 
-const newPlaylist = (setPlaylist) => {
-    axios.get('http://localhost:8080/api/media/playlist/new')
+const newPlaylist = (playlists, setCurrPlaylist, setPlaylists) => {
+    axios.post('http://localhost:8080/api/media/playlist/new')
         .then((response) => {
             console.log("New playlist created.");
-            setPlaylist({'tracks': [], 'name': ""});
+            var new_playlists = playlists;
+            setCurrPlaylist(playlists.count);
+            new_playlists.append([]);
+            setPlaylists({'playlists': [], 'name': ""});
         }).catch((err) => { console.log("Failed to create new playlist: ", err)})
 };
 
@@ -93,11 +96,13 @@ function MusicPlayer() {
 
 const PlaylistContainer = () => {
 
-    const [playlist, setPlaylist] = React.useState({'tracks': [
+    const [playlists, setPlaylist] = React.useState({'playlists': [
         {'name': "My playlist 1"},
         {'name': "Metal playlist"},
     ]}
     );
+
+    const [currPlaylist, setCurrPlaylist] = React.useState(0);
 
     const handleNew = () => {
         newPlaylist(setPlaylist);
@@ -115,6 +120,10 @@ const PlaylistContainer = () => {
         <Container className="centered player-border mt-5">
 
             <Row className="justify-content-center m-5">
+                { playlists.playlists[currPlaylist] === {} || curr ? (<div>Playlist - None</div>) : (<div>Playlist - {playlists.playlists[currPlaylist].name}</div>) }
+            </Row>
+
+            <Row className="justify-content-center m-5">
 
                 <Button className="m-3 plusBtn playerBtn" onClick={handleNew}></Button>
                 <Button className="m-3 prevBtn playerBtn" onClick={handlePrev}></Button>
@@ -123,11 +132,7 @@ const PlaylistContainer = () => {
             </Row>
 
             <Row className="justify-content-center m-5">
-                { playlist !== {} ? (<div>Playlist - None</div>) : (<div>Playlist - {playlist.title}</div>) }
-            </Row>
-
-            <Row className="justify-content-center m-5">
-                <List list={playlist.tracks}></List>
+                <List list={playlists.playlists}></List>
             </Row>
         </Container>
     );
