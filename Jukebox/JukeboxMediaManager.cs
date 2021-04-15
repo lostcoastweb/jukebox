@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace Jukebox.Library
 {
     class JukeboxMediaManager
@@ -20,9 +21,12 @@ namespace Jukebox.Library
         private Playlist _currentPlaylist = new Playlist();
         private static JukeboxMediaManager _instance;
 
+        //protected Playlist activePlaylist = new Playlist();
+
         private JukeboxMediaManager()
         {
-            
+          
+
         }
 
         public static JukeboxMediaManager GetInstance(IMediaManager musicContext = null)
@@ -73,6 +77,54 @@ namespace Jukebox.Library
             });
         }
 
+        public void PlayNext()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                await CrossMediaManager.Current.PlayNext();
+            });
+        }
+
+        public void PlayPrev()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
+            });
+        }
+
+        public void VolumeDown()
+        {
+            
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(() => {
+
+                CrossMediaManager.Current.Volume.CurrentVolume = 0;
+            }
+            );
+        }
+
+        public void VolDown()
+        {
+            CrossMediaManager.Current.Volume.CurrentVolume =0;
+        }
+
+        public void VolumeUp()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                
+
+            });
+        }
+
+      
+        public void Mute()
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                
+            });
+        }
 
         //public void Start()
         //{
@@ -82,7 +134,7 @@ namespace Jukebox.Library
         //        Thread player = new Thread(new ThreadStart(MediaPlayerLoop));
         //        player.Start();
         //    }
-            
+
         //}
 
         //private void MediaPlayerLoop()

@@ -1,8 +1,9 @@
 ﻿using MediaManager;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using Xamarin.Forms.Platform.WPF;
 
-namespace Jukebox.WPF
+namespace Jukebox.WpfCore
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
