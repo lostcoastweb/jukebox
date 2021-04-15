@@ -5,7 +5,9 @@ import ReactDOM from 'react-dom';
 import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
+
 import MusicPlayer from "../src/views/musicplayer/MusicPlayer";
+import {play} from "../src/views/musicplayer/MusicPlayer";
 
 
 let container = null;
@@ -20,6 +22,18 @@ afterEach(() => {
   unmountComponentAtNode(container);
   container.remove();
   container = null;
+});
+
+it('play test', () => {
+    render(<App />, container);
+    fireEvent.click(screen.getByAltText('play'));
+    await waitFor(() => screen.getByRole('heading'))
+    expect(screen.getByRole('playBtn').toHaveAttribute('disabled'));
+
+});
+
+it('pause test', () => {
+  expect(play()).toEqual(1);
 });
 
 it("renders Music Player", () => {
