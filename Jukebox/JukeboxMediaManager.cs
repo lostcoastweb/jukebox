@@ -96,9 +96,9 @@ namespace Jukebox.Library
         public void VolumeDown()
         {
             
-            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () => {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(() => {
 
-                await Task.Run(() => VolDown());
+                CrossMediaManager.Current.Volume.CurrentVolume = 0;
             }
             );
         }
