@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Jukebox.Models
 {
@@ -15,6 +16,18 @@ namespace Jukebox.Models
             {
                 return Songs[CurrentSongIndex];
             }
+        }
+       public Playlist()
+        {
+            Name = "";
+            Songs = new List<MusicFile> { };
+            CurrentSongIndex = 0;
+        }
+
+        //Converts playlist into an ilist for xamarin media manager to use
+        public IList<string> AllMusicFilePath()
+        {
+            return Songs.Select(s => s.Path).ToList();
         }
     }
 }

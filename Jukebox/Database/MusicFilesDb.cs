@@ -41,7 +41,7 @@ namespace Jukebox.Database
         {
             _db.Open();
             string sql = @"SELECT 
-                           id As Id,
+                            id As Id,
                             path as Path,
                             album as Album,
                             artist AS Artist,
@@ -55,6 +55,38 @@ namespace Jukebox.Database
             var items = result.ToList();
             _db.Close();
             return items;
+        }
+
+        public async Task<IEnumerable<MusicFile>> Search(string search, int limit, int offset = 0)
+        {
+            _db.Open();
+            string sql = @"SELECT 
+                           id As Id,
+                           path as Path,
+                           album as Album,
+                           artist AS Artist,
+                           title AS Title,
+                           year AS Year,
+                           track_number AS TrackNumber
+                           FROM music_files 
+                           WHERE instr(LOWER(title), @search)>0
+                           OR instr(LOWER(artist), @search)>0
+                           OR instr(LOWER(album), @search)>0
+                           LIMIT @limit
+                           OFFSET @offset";
+            try
+            {
+                var result = await _db.QueryAsync<MusicFile>(sql, new { limit = limit, offset = offset, search = search.ToLower() });
+                var items = result.ToList();
+                _db.Close();
+                return items;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception encountered: " + e.Message);
+                _db.Close();
+                return null;
+            }
         }
 
         public async Task<int> Count()

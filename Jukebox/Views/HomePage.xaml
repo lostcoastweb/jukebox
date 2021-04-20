@@ -13,6 +13,8 @@
             <Button Command="{Binding MediaManager.ScanForMusicCommand}" Text="Scan For Music"></Button>
             <Button Command="{Binding PlayMusicCommand}" Text="Play"></Button>
             <Button Command="{Binding PauseMusicCommand}" Text="Pause"></Button>
+            <Button Command="{Binding PrevSongCommand}" Text="Previous Song"></Button>
+            <Button Command="{Binding NextSongCommand}" Text="Next Song"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
