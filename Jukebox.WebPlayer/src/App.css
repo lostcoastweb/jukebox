@@ -147,3 +147,7 @@
 input{
   position:relative;
 }
+
+.seekbar{
+width: 600px;
+}

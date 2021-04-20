@@ -115,12 +115,17 @@ function MusicPlayer() {
   },[volume]);
 
   function onChangeVolume(){
-    var input = document.getElementById('volume-meter');
-    setVolume(input.value); // value change
-    console.log(input.value);
+    var volumeInput = document.getElementById('volume-meter');
+    setVolume(volumeInput.value); 
+    console.log(volumeInput.value);
     console.log(volume);
   };
-
+  function onSeek(){
+    var seekInput = document.getElementById('seekbar');
+    console.log(seekInput.value);
+    
+   
+  };
   
     return(
         <>
@@ -136,19 +141,22 @@ function MusicPlayer() {
                 </Row>
 
               
-            
-
-                {/* Music Player Buttons Container */}
+                {/* SeekBar */}
                 <Row className="justify-content-center m-5">
+                  <input className="seekbar" id="seekbar"  type="range" min="1" max="100" onChange={onSeek}/>                  
+                </Row>
 
-                  {/* Track Control Buttons */}
+                {/* Track Control Buttons */}
+                <Row className="justify-content-center my-5 mx-1">
                       <Button className="m-3 prevBtn playerBtn"  onClick={e=>playPrev(e)} id="prevBtn" ></Button>                
                       <Button className="m-3 pauseBtn hidden playerBtn" alt="pause" onClick={e=>pause(e)} id="pauseBtn"></Button>              
                       <Button className="m-3 playBtn playerBtn" alt="play" id="playBtn" onClick={e=>play(e)}></Button>          
-                      <Button className="m-3 mr-5 nextBtn playerBtn"  onClick={e=>playNext(e)} id="nextBtn"></Button>
-                    
-                    {/* Volume Buttons */}
-                      <Button className="m-3 ml-5 volDownBtn playerBtn"  onClick={e=>volDown(e)} id="volDown"></Button>                     
+                      <Button className="m-3 nextBtn playerBtn"  onClick={e=>playNext(e)} id="nextBtn"></Button>
+                </Row>
+
+                  {/* Volume Buttons */}
+                 <Row className="justify-content-center ">
+                      <Button className="m-3 volDownBtn playerBtn"  onClick={e=>volDown(e)} id="volDown"></Button>                     
                       <input className="volume-meter" id="volume-meter"  type="range" min="1" max="100" onChange={onChangeVolume}/>                  
                       <Button className="m-3 volUpBtn playerBtn"  onClick={e=>volUp(e)} id="volUp"></Button>
                       <Button className="m-3 muteBtn playerBtn"  onClick={e=>mute(e)} id="mute"></Button>                 
