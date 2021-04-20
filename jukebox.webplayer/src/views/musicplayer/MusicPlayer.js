@@ -15,6 +15,7 @@ export function play(event){
      event.preventDefault();
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
+    const title = document.getElementById("titleInfo");
    
 
      playBtn.classList.add('hidden');
@@ -23,7 +24,10 @@ export function play(event){
      console.log(localIpUrl());
  
      axios.get(config.Routes.Play)
-     .then((response)=>{console.log(response.data)})
+     .then((response)=>{
+       console.log(response.data); 
+       title.innerHTML = response.data;
+    })
         .catch(function (){console.log("error play")});
     console.log("pressed play ");
     return 1;

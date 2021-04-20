@@ -42,8 +42,9 @@ namespace Jukebox.Controllers
         public string PlayMusic()
         {
             JukeboxMediaManager.GetInstance().Play();
+            var currentSong = CrossMediaManager.Current.Queue.Current.DisplayTitle;
             
-            return "play";
+            return currentSong;
         }
 
         [Route(HttpVerbs.Get, "/play/{id}")]
