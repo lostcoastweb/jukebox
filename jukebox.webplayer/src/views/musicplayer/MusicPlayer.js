@@ -5,14 +5,13 @@ import Col from 'react-bootstrap/Col';
 import config from '../../appsettings.json'
 
 import '../../App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 const localIpUrl = require('local-ip-url');
 
 const axios = require('axios').default;
 
 
-
- export function play(event){
+export function play(event){
      event.preventDefault();
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
@@ -68,19 +67,25 @@ const axios = require('axios').default;
     console.log("pressed prev");
 
 }
- export function volDown(event){
-     event.preventDefault();
 
+function MusicPlayer() {
+  const [volume, setVolume] = useState(50);
+
+  function volDown(event){
+     event.preventDefault();
+    setVolume(parseInt(volume) - 10);
      axios.get(config.Routes.volDown)
         .then((response) => {
            console.log(response.data + "volDown")
          }
       ).catch(function (error){console.log("error volDown")});
     console.log("pressed volDown");
+    console.log(volume);
 
-}
- export function volUp(event){
+  }
+  function volUp(event){
      event.preventDefault();
+     setVolume(parseInt(volume)  + 10);
 
      axios.get(config.Routes.volUp)
         .then((response) => {
@@ -88,10 +93,12 @@ const axios = require('axios').default;
          }
       ).catch(function (error){console.log("error volUp")});
     console.log("pressed volUp");
+    console.log(volume);
 
-}
- export function mute(event){
+  }
+  function mute(event){
      event.preventDefault();
+     setVolume(0); 
 
      axios.get(config.Routes.mute)
         .then((response) => {
@@ -100,10 +107,21 @@ const axios = require('axios').default;
       ).catch(function (error){console.log("error mute")});
     console.log("pressed mute");
 
-}
+  }
 
-function MusicPlayer() {
+   useEffect(() => {   
+    const volumeSlider = document.getElementById("volume-meter");
+    volumeSlider.value=volume;
+  },[volume]);
 
+  function onChangeVolume(){
+    var input = document.getElementById('volume-meter');
+    setVolume(input.value); // value change
+    console.log(input.value);
+    console.log(volume);
+  };
+
+  
     return(
         <>
         <Container className="centered player-border mt-5">
@@ -117,23 +135,23 @@ function MusicPlayer() {
                     </div>   
                 </Row>
 
-                {/* Music Player Buttons */}
-                <Row className="justify-content-center m-5">
-                      <Button className="m-3 prevBtn playerBtn"  onClick={e=>playPrev(e)} id="prevBtn" ></Button>
-                   
-                        <Button className="m-3 pauseBtn hidden playerBtn" alt="pause" onClick={e=>pause(e)} id="pauseBtn"></Button>
-                      
-                        <Button className="m-3 playBtn playerBtn" alt="play" id="playBtn" onClick={e=>play(e)}></Button>
-                    
-                        <Button className="m-3 nextBtn playerBtn"  onClick={e=>playNext(e)} id="nextBtn"></Button>
-                      
+              
+            
 
-                      
-                        <Button className="m-3 volDownBtn playerBtn"  onClick={e=>volDown(e)} id="volDown"></Button>
-                        <Button className="m-3 volUpBtn playerBtn"  onClick={e=>volUp(e)} id="volUp"></Button>
-                        <Button className="m-3 muteBtn playerBtn"  onClick={e=>mute(e)} id="mute"></Button>  
-                        
-                
+                {/* Music Player Buttons Container */}
+                <Row className="justify-content-center m-5">
+
+                  {/* Track Control Buttons */}
+                      <Button className="m-3 prevBtn playerBtn"  onClick={e=>playPrev(e)} id="prevBtn" ></Button>                
+                      <Button className="m-3 pauseBtn hidden playerBtn" alt="pause" onClick={e=>pause(e)} id="pauseBtn"></Button>              
+                      <Button className="m-3 playBtn playerBtn" alt="play" id="playBtn" onClick={e=>play(e)}></Button>          
+                      <Button className="m-3 mr-5 nextBtn playerBtn"  onClick={e=>playNext(e)} id="nextBtn"></Button>
+                    
+                    {/* Volume Buttons */}
+                      <Button className="m-3 ml-5 volDownBtn playerBtn"  onClick={e=>volDown(e)} id="volDown"></Button>                     
+                      <input className="volume-meter" id="volume-meter"  type="range" min="1" max="100" onChange={onChangeVolume}/>                  
+                      <Button className="m-3 volUpBtn playerBtn"  onClick={e=>volUp(e)} id="volUp"></Button>
+                      <Button className="m-3 muteBtn playerBtn"  onClick={e=>mute(e)} id="mute"></Button>                 
                 </Row>
            
 
@@ -143,11 +161,10 @@ function MusicPlayer() {
 
        
     );
-
-
+    
 
 }
-
-
+    
+    
 
 export default MusicPlayer;

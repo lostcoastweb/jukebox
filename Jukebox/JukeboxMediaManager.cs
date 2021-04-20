@@ -96,16 +96,17 @@ namespace Jukebox.Library
         public void VolumeDown()
         {
             
-            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () => {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(() => {
+                CrossMediaManager.Current.Volume.MaxVolume = 1;
 
-                await Task.Run(() => VolDown());
+                CrossMediaManager.Current.Volume.CurrentVolume = 0;
             }
             );
         }
 
         public void VolDown()
         {
-            CrossMediaManager.Current.Volume.CurrentVolume =0;
+            CrossMediaManager.Current.Volume.CurrentVolume = 0;
         }
 
         public void VolumeUp()
