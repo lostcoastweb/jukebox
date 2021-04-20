@@ -55,6 +55,6 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="del A:\Programming\C#\jukebox\Jukebox\bin\Debug\netstandard2.0\Jukebox.dll&#xD;&#xA;del A:\Programming\C#\jukebox\Jukebox\bin\Debug\netstandard2.0\ref\Jukebox.dll" />
+    <Exec Command="cd bin/Debug/netstandard2.0&#xD;&#xA;del /f /q Jukebox.dll&#xD;&#xA;del /f /q ref\Jukebox.dll&#xD;&#xA;cd ..\..\...\" />
   </Target>
 </Project>
