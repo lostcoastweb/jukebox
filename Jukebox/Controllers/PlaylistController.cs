@@ -2,6 +2,7 @@
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using Jukebox.Database;
+using Jukebox.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,22 +13,34 @@ namespace Jukebox.Controllers
     public class PlaylistController : WebApiController
     {
         protected JukeboxDb _db;
+        protected PlaylistDb _pdb;
         public PlaylistController() : base()
         {
             _db = JukeboxDb.GetInstance();
+            _pdb = PlaylistDb.GetInstance();
         }
 
         [Route(HttpVerbs.Get, "/")]
-        public async Task<string> GetAllPlaylists()
+        public async Task<IEnumerable<Playlist>> GetAllPlaylists()
         {
-            return "";
+            List<string> playlists = new List<string>();
+            var music_files = await _pdb.All();
+            
+            return music_files;
         }
 
         [Route(HttpVerbs.Post, "/")]
-        public async Task<string> PostPlaylist()
+        public async Task<bool> PostPlaylist()
         {
             var rawData = await HttpContext.GetRequestFormDataAsync();
-            return "";
+            if (rawData.Get("name") != null)
+            {
+                Playlist playlist = new Playlist();
+                playlist.Name = rawData.Get("name");
+                return await _pdb.Add(playlist);
+            }
+
+            return false;
         }
 
         [Route(HttpVerbs.Get, "/{id}")]

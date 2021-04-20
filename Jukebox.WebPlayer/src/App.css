@@ -37,6 +37,13 @@
   }
 }
 
+.hidden{
+  display: none  !important;
+}
+.show{
+  display:block !important;
+}
+
 .playBtn{
   background-image: url( '../src/icons/play-solid.svg' );
   background-repeat: no-repeat;

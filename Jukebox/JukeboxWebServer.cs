@@ -3,6 +3,7 @@ using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using Jukebox.Controllers;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,8 +29,10 @@ namespace Jukebox
                 server.WithWebApi("/api/fs", m => m.WithController(() => new FileSystemController()));
                 server.WithWebApi("/api/music", m => m.WithController(() => new MusicPlayerController()));
                 server.WithWebApi("/api/media", m => m.WithController(() => new MediaManagerController()));
+                server.WithWebApi("/api/playlist", m => m.WithController(() => new PlaylistController()));
                 //server.WithWebApi("/api", m => m.WithController(() => new TestController()));
                 //server.WithEmbeddedResources("/", assembly, "EmbedIO.Forms.Sample.html");
+                Debug.WriteLine("\ntest\n");
                 await server.RunAsync();
             }
         }
