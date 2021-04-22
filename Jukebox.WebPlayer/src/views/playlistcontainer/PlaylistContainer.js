@@ -35,12 +35,13 @@ const inputName = () => {
     }
 };
 
-const newPlaylist = (name, playlists, setCurrPlaylist, setPlaylists) => {
+const newPlaylist = (name, playlists, setCurrPlaylist, setPlaylists, setNewName) => {
     console.log("New playlist created.");
     var new_playlists = playlists;
     setCurrPlaylist(playlists.length);
     new_playlists.push({'name': name});
     setPlaylists(new_playlists);
+    setNewName("");
 
     axios.post('http://localhost:8080/api/playlist/new')
         .then((response) => {
@@ -66,7 +67,7 @@ const PlaylistContainer = () => {
 
     const handleNew = (event) => {
         event.preventDefault();
-        newPlaylist(newName, playlists, setCurrPlaylist, setPlaylists);
+        newPlaylist(newName, playlists, setCurrPlaylist, setPlaylists, setNewName);
         inputName();
     };
 

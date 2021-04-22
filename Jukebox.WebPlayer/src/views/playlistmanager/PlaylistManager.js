@@ -19,11 +19,12 @@ const PlaylistManager = () => {
     const [playlistSongs, setPlaylistSongs] = React.useState([]);
 
     const onMove = (item) => {
-        if (songList.findIndex(j => j === item) !== undefined) {
-            const temp = playlistSongs;
-            temp.push(item);
-            setPlaylistSongs(temp);
-            console.log("tst");
+        if (songList.findIndex(j => j === item) !== -1) {
+            setPlaylistSongs([...playlistSongs, item]);
+            setSongList(songList.filter(j => j !== item));
+        } else if (playlistSongs.findIndex(k => k === item) !== -1) {
+            setSongList([...songList, item]);
+            setPlaylistSongs(playlistSongs.filter(k => k !== item));
         }
     };
 
