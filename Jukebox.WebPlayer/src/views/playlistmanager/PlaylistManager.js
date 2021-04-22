@@ -23,20 +23,24 @@ const PlaylistManager = () => {
             const temp = playlistSongs;
             temp.push(item);
             setPlaylistSongs(temp);
-            console.log("test");
+            console.log("tst");
         }
     };
 
     return (
         <Row>
-            <Col className="margin-20px">
+            <Col className="margin-40px">
                 <Container className="centered player-border mt-5">
+                    Songs
+                    <hr/>
                     <SongList list={songList} onMove={onMove}  />
                 </Container>
             </Col>
 
-            <Col className="margin-20px">
+            <Col className="margin-40px">
                 <Container className="centered player-border mt-5">
+                    Playlist
+                    <hr/>
                     <SongList list={playlistSongs} onMove={onMove} />
                 </Container>
             </Col>
