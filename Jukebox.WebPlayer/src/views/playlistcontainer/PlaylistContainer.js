@@ -85,7 +85,7 @@ const PlaylistContainer = () => {
                 { playlists[currPlaylist] === {} ? (<div>Playlist - None</div>) : (<div>Playlist - {playlists[currPlaylist].name}</div>) }
             </Row>
 
-            <Row id="playlist_name" className="justify-content-center m-5">
+            <Row id="playlist_name" className="justify-content-center m-5 hidden">
 
                 <form onSubmit={handleNew}>
                         <input value={newName} onChange={newChange}></input>
@@ -115,7 +115,6 @@ const List = ({list}) => (
 );
 
 const PlaylistItem = ({item}) => {
-    console.log(item);
     return (
         <Container>
             <span>{item.name}</span>
