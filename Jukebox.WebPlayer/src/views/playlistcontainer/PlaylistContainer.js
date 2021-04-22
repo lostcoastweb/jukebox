@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
+import {Link, BrowserRouter, Route} from 'react-router-dom';
+
 import '../../App.css';
 const axios = require('axios').default;
 
@@ -100,6 +102,7 @@ const PlaylistContainer = () => {
                 <Button className="m-3 plusBtn playerBtn" onClick={inputName}></Button>
                 <Button className="m-3 prevBtn playerBtn" onClick={handlePrev}></Button>
                 <Button className="m-3 nextBtn playerBtn" onClick={handleNext}></Button>
+                <Link className="m-4" to="/playlist">Edit</Link>
 
             </Row>
 

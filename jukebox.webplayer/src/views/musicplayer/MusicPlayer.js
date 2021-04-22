@@ -109,8 +109,6 @@ const axios = require('axios').default;
 function MusicPlayer() {
 
     return(
-        <>
-            
         <Container className="centered player-border mt-5">
                    
                 {/* Song Information */}
@@ -142,12 +140,6 @@ function MusicPlayer() {
                 </Row>
            
 			</Container>
-
-            <PlaylistContainer></PlaylistContainer>
-
-            <PlaylistManager />
-
-        </>
 
        
     );
