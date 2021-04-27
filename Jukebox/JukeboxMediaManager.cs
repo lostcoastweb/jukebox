@@ -51,6 +51,68 @@ namespace Jukebox.Library
         {
         }
 
+<<<<<<< Updated upstream
+=======
+        public Dictionary<string, string> getCurrentMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+            
+
+                metaData.Add("Title", _currentPlaylist.Songs[index].Title);
+                metaData.Add("Artist", _currentPlaylist.Songs[index].Artist);
+                metaData.Add("Album", _currentPlaylist.Songs[index].Album);
+                metaData.Add("durationSeconds", _currentPlaylist.Songs[index ].Duration.Seconds.ToString());
+                metaData.Add("durationMinutes", _currentPlaylist.Songs[index ].Duration.Minutes.ToString());
+                metaData.Add("durationHours", _currentPlaylist.Songs[index ].Duration.Hours.ToString());
+
+
+
+            return metaData;
+        }
+
+        public Dictionary<string, string> getNextMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+
+
+            metaData.Add("Title", _currentPlaylist.Songs[index+1].Title);
+            metaData.Add("Artist", _currentPlaylist.Songs[index+1].Artist);
+            metaData.Add("Album", _currentPlaylist.Songs[index+1].Album);
+            metaData.Add("durationSeconds", _currentPlaylist.Songs[index + 1].Duration.Seconds.ToString());
+            metaData.Add("durationMinutes", _currentPlaylist.Songs[index + 1].Duration.Minutes.ToString());
+            metaData.Add("durationHours", _currentPlaylist.Songs[index + 1].Duration.Hours.ToString());
+
+
+
+            return metaData;
+        }
+
+        public Dictionary<string, string> getPrevMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+
+
+            metaData.Add("Title", _currentPlaylist.Songs[index-1].Title);
+            metaData.Add("Artist", _currentPlaylist.Songs[index-1].Artist);
+            metaData.Add("Album", _currentPlaylist.Songs[index-1].Album);
+            metaData.Add("durationSeconds", _currentPlaylist.Songs[index-1].Duration.Seconds.ToString());
+            metaData.Add("durationMinutes", _currentPlaylist.Songs[index - 1].Duration.Minutes.ToString());
+            metaData.Add("durationHours", _currentPlaylist.Songs[index - 1].Duration.Hours.ToString());
+
+
+
+
+            return metaData;
+        }
+
+
+>>>>>>> Stashed changes
         public void Play()
         {
             Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
@@ -125,6 +187,16 @@ namespace Jukebox.Library
             {
                 
             });
+        }
+
+        public int Seek(int seekValue)
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+               
+
+            });
+            return seekValue;
         }
 
         //public void Start()

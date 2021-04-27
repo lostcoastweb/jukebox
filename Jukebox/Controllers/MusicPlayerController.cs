@@ -96,5 +96,13 @@ namespace Jukebox.Controllers
             JukeboxMediaManager.GetInstance().Mute();
             return "";
         }
+
+
+        [Route(HttpVerbs.Get, "/seek/?seekValue=")]
+        public async Task<int> Seek(int seekValue)
+        {
+            var seek = JukeboxMediaManager.GetInstance().Seek(seekValue);
+            return seekValue;
+        }
     }
 }
