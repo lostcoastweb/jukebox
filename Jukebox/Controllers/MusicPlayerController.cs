@@ -115,8 +115,8 @@ namespace Jukebox.Controllers
         }
 
 
-        [Route(HttpVerbs.Get, "/seek/")]
-        public async Task<int> Seek(int seekValue)
+        [Route(HttpVerbs.Get, "/seek/{seekValue}")]
+        public async Task<float> Seek(float seekValue)
         {
             var seek = JukeboxMediaManager.GetInstance().Seek(seekValue);
             return seekValue;

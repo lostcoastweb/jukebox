@@ -205,7 +205,7 @@ function MusicPlayer() {
     var newSeekTime = (seekInput.value/100)*totalSeconds;
 
     console.log("SeekTime:" + newSeekTime);
-    axios.get(config.Routes.seek+"?seekValue="+newSeekTime)
+    axios.get(config.Routes.seek+newSeekTime)
         .then((response) => {
            console.log(response.data + "seek")
          }

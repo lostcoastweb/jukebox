@@ -218,7 +218,7 @@ namespace Jukebox.Library
                 
             });
         }
-        public int Seek(int seekValue)
+        public int Seek(float seekValue)
         {
             Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
             {
