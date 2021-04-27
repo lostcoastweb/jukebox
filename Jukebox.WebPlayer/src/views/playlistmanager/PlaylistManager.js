@@ -4,12 +4,21 @@ import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 
 import '../../App.css';
+import { play } from '../musicplayer/MusicPlayer';
 
 const axios = require('axios').default;
 
-const SearchSongs = (searchTerm) => {
+const SearchSongs = (searchTerm, setList) => {
     axios.get(`http://localhost:8080/api/media/search/${searchTerm}`).then((response) => {
-        return response.data;
+        setList(JSON.parse(response.data.slice(1, response.data.length-1)));
+    }).catch((reason) => {
+        console.error("Error encountered: ", reason);
+    });
+};
+
+const GetSongs = (setList) => {
+    axios.get('http://localhost:8080/api/music/files').then((response) => {
+        setList(JSON.parse(response.data.slice(1, response.data.length-1)));
     }).catch((reason) => {
         console.error("Error encountered: ", reason);
     });
@@ -17,16 +26,11 @@ const SearchSongs = (searchTerm) => {
 
 const PlaylistManager = () => {
 
-    const [songList, setSongList] = React.useState([
-        { 'artist': 'Dio', 'name': 'Holy Diver' },
-        { 'artist': 'Metallica', 'name': 'One' },
-        { 'artist': 'Metallica', 'name': 'Master of Puppets' },
-        { 'artist': 'Ne Obliviscaris', 'name': 'And Plague Flowers The Kaleidoscope' },
-    ]);
+    const [songList, setSongList] = React.useState([]);
 
     const [playlistSongs, setPlaylistSongs] = React.useState([]);
 
-    const [searchTerm, setSearchTerm] = React.useState('aa');
+    const [searchTerm, setSearchTerm] = React.useState('');
 
     // todo: implement sort
     /*const alphaNumericSort = (a, b) => {
@@ -34,10 +38,12 @@ const PlaylistManager = () => {
     };*/
 
     const onMove = (item) => {
-        if (songList.findIndex(j => j === item) !== -1) {
+        if (/*songList !== undefined && songList !== null &&*/ songList.findIndex(j => j === item) !== -1) {
+            console.log("1");
             setPlaylistSongs([...playlistSongs, item]);
             setSongList(songList.filter(j => j !== item));
-        } else if (playlistSongs.findIndex(k => k === item) !== -1) {
+        } else if (/*playlistSongs !== undefined && playlistSongs !== null &&*/ playlistSongs.findIndex(k => k === item) !== -1) {
+            console.log("2S");
             setSongList([...songList, item]);
             setPlaylistSongs(playlistSongs.filter(k => k !== item));
         }
@@ -47,8 +53,16 @@ const PlaylistManager = () => {
         event.preventDefault();
     };
 
+    const searchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
     React.useEffect(() => {
-        setSongList(SearchSongs(searchTerm));
+        if (searchTerm !== '' && searchTerm !== undefined && searchTerm !== null) {
+            setSongList(SearchSongs(searchTerm, setSongList));
+        } else {
+            GetSongs(setSongList);
+        }
     }, [searchTerm]);
 
     return (
@@ -57,11 +71,9 @@ const PlaylistManager = () => {
                 <Container className="centered player-border mt-5">
                     Songs
                     <hr />
-                    <form onSubmit={onSearch}>Search: <input type="search" style={{margin: '10px'}}/></form>
-                    <SongList list={songList !== [] ? ([{ 'artist': 'Dio', 'name': 'Holy Diver' },
-                    { 'artist': 'Metallica', 'name': 'One' },
-                    { 'artist': 'Metallica', 'name': 'Master of Puppets' },
-                    { 'artist': 'Ne Obliviscaris', 'name': 'And Plague Flowers The Kaleidoscope' },]) : (songList)} onMove={onMove} />
+                    <form onSubmit={onSearch}>Search: <input type="search" value={searchTerm} style={{ margin: '10px' }} onChange={searchChange}/></form>
+                    {songList === undefined ? (<>True</>) : (<SongList list={songList} onMove={onMove} />)}
+                    {/**/}
                 </Container>
             </Col>
 
@@ -88,7 +100,7 @@ const SongItem = ({ item, onMove }) => {
 
     return (
         <Container>
-            <span>{item.artist} - {item.name}</span>
+            <span>{item["Artist"]} - {item["Title"]}</span>
             <button onClick={moveItem.bind(null, item)}></button>
         </Container>
     );
