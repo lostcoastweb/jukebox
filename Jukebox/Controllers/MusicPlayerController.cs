@@ -17,8 +17,6 @@ namespace Jukebox.Controllers
     {
         protected JukeboxDb _db;
 
-      
-
         public MusicPlayerController()
         {
             _db = JukeboxDb.GetInstance();
@@ -39,12 +37,11 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/play")]
-        public string PlayMusic()
+        public Dictionary<string, string> PlayMusic()
         {
             JukeboxMediaManager.GetInstance().Play();
-            var currentSong = CrossMediaManager.Current.Queue.Current.DisplayTitle;
-            
-            return currentSong;
+
+            return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 
         [Route(HttpVerbs.Get, "/play/{id}")]
@@ -56,24 +53,44 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/pause")]
-        public string PauseMusic()
+        public Dictionary<string, string> PauseMusic()
         {
             JukeboxMediaManager.GetInstance().Pause();
-            return "";
+           
+
+            return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 
         [Route(HttpVerbs.Get, "/next")]
-        public async Task<string> NextTrack()
+        public async Task<Dictionary<string, string>>  NextTrack()
         {
-            JukeboxMediaManager.GetInstance().PlayNext();
-            return "";
+            await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
+            if(CrossMediaManager.Current.Queue.HasNext)
+            {
+                return JukeboxMediaManager.GetInstance().getNextMetadata();
+
+            }
+            else
+            {
+                return JukeboxMediaManager.GetInstance().getCurrentMetadata();
+            };
+
         }
 
+       
+
         [Route(HttpVerbs.Get, "/prev")]
-        public async Task<string> PreviousTrack()
+        public async Task<Dictionary<string, string>> PreviousTrack()
         {
-            JukeboxMediaManager.GetInstance().PlayPrev();
-            return "";
+            await Task.Run(()=> JukeboxMediaManager.GetInstance().PlayPrev());
+            if (CrossMediaManager.Current.Queue.HasPrevious)
+            {
+                return JukeboxMediaManager.GetInstance().getPrevMetadata();
+            }
+            else {
+                return JukeboxMediaManager.GetInstance().getCurrentMetadata();
+            };
+               
         }
 
         [Route(HttpVerbs.Get, "/volDown")]
@@ -98,7 +115,7 @@ namespace Jukebox.Controllers
         }
 
 
-        [Route(HttpVerbs.Get, "/seek/?seekValue=")]
+        [Route(HttpVerbs.Get, "/seek/")]
         public async Task<int> Seek(int seekValue)
         {
             var seek = JukeboxMediaManager.GetInstance().Seek(seekValue);

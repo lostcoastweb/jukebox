@@ -16,13 +16,10 @@ export function play(event){
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
     const title = document.getElementById("titleInfo");
-<<<<<<< Updated upstream
-=======
     const artist = document.getElementById("artistInfo");
     const album = document.getElementById("albumInfo");
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
->>>>>>> Stashed changes
    
 
      playBtn.classList.add('hidden');
@@ -32,11 +29,6 @@ export function play(event){
  
      axios.get(config.Routes.Play)
      .then((response)=>{
-<<<<<<< Updated upstream
-       console.log(response.data); 
-       title.innerHTML = response.data;
-    })
-=======
        console.log(response.data.Title); 
        title.innerHTML = response.data.Title;
        artist.innerHTML = response.data.Artist;
@@ -52,7 +44,6 @@ export function play(event){
           durationMinutes.innerHTML = response.data.durationMinutes;  
        }    
       })
->>>>>>> Stashed changes
         .catch(function (){console.log("error play")});
     console.log("pressed play ");
     return 1;
@@ -62,25 +53,18 @@ export function play(event){
      event.preventDefault();
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
-<<<<<<< Updated upstream
-    
-=======
     const title = document.getElementById("titleInfo");
     const artist = document.getElementById("artistInfo");
     const album = document.getElementById("albumInfo");
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
 
->>>>>>> Stashed changes
      pauseBtn.classList.remove('show');
      pauseBtn.classList.add('hidden');
      playBtn.classList.add('show');
 
      axios.get(config.Routes.Pause)
         .then((response) => {
-<<<<<<< Updated upstream
-           console.log(response.data + "pause")
-=======
            console.log(response.data.Title);
            title.innerHTML = response.data.Title;
        artist.innerHTML = response.data.Artist;
@@ -95,28 +79,20 @@ export function play(event){
           durationSeconds.innerHTML = response.data.durationSeconds;
           durationMinutes.innerHTML = response.data.durationMinutes;  
        }
->>>>>>> Stashed changes
          }
       ).catch(function (error){console.log("error pause")});
     console.log("pressed pause");
 }
  export function playNext(event){
-<<<<<<< Updated upstream
-=======
    const title = document.getElementById("titleInfo");
     const artist = document.getElementById("artistInfo");
     const album = document.getElementById("albumInfo");
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
->>>>>>> Stashed changes
      event.preventDefault();
    
      axios.get(config.Routes.Next)
         .then((response) => {
-<<<<<<< Updated upstream
-           console.log(response.data + "next")
-         }
-=======
            console.log(response.data + "next");
            title.innerHTML = response.data.Title;
        artist.innerHTML = response.data.Artist;
@@ -132,30 +108,22 @@ export function play(event){
           durationMinutes.innerHTML = response.data.durationMinutes;  
        }      
        }
->>>>>>> Stashed changes
       ).catch(function (error){console.log("error next")});
     console.log("pressed next");
 
 }
  export function playPrev(event){
-<<<<<<< Updated upstream
-=======
    const title = document.getElementById("titleInfo");
     const artist = document.getElementById("artistInfo");
     const album = document.getElementById("albumInfo");
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
 
->>>>>>> Stashed changes
      event.preventDefault();
 
      axios.get(config.Routes.Prev)
         .then((response) => {
            console.log(response.data + "prev")
-<<<<<<< Updated upstream
-         }
-      ).catch(function (error){console.log("error prev")});
-=======
            title.innerHTML = response.data.Title;
        artist.innerHTML = response.data.Artist;
        album.innerHTML = response.data.Album;
@@ -173,7 +141,6 @@ export function play(event){
        }
 
       ).catch(function (error){console.log("error")});
->>>>>>> Stashed changes
     console.log("pressed prev");
 
 }
@@ -259,17 +226,14 @@ function MusicPlayer() {
                         <div id="titleInfo">Track - song 1</div>
                         <br></br>
                         <div id="artistInfo">Artist - someones</div>
+                        <br></br>
+                        <div id="albumInfo">Artist - someones</div>
                     </div>   
                 </Row>
 
               
                 {/* SeekBar */}
-<<<<<<< Updated upstream
-                <Row className="justify-content-center m-5">
-                  <input className="seekbar" id="seekbar"  type="range" min="1" max="100" onChange={onSeek}/>                  
-                </Row>
-=======
-                 <div>
+                 
                    
                   <Row className="justify-content-center m-5">
                       <input className="seekbar" id="seekbar"  type="range" min="1" max="100" onChange={onSeek}/>   
@@ -280,7 +244,6 @@ function MusicPlayer() {
                       <div className="pb-5" id="durationSecInfo"> duration </div>    
                            
                   </Row>
->>>>>>> Stashed changes
 
                 {/* Track Control Buttons */}
                 <Row className="justify-content-center my-5 mx-1">
