@@ -2,8 +2,7 @@
 using Jukebox.Library;
 using Jukebox.Models;
 using MediaManager;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
+using Xamarin.Essentials;
 using StandardStorage;
 using System;
 using System.Collections.Generic;
@@ -48,7 +47,7 @@ namespace Jukebox.ViewModels
                 Album = "album1",
                 Title = "song1",
                 Artist = "artist1",
-                Path = "C:/Users/dbjer/Music/playlist/track1.mp3"
+                Path = "C:/Users/acarter/Music/Alabama Shakes/Boys & Girls [+digital booklet]/01-01- Hold On.mp3"
             });
             activePlaylist.Songs.Add(new MusicFile
             {
@@ -113,16 +112,17 @@ namespace Jukebox.ViewModels
 
         private async Task PickMusicPath()
         {
+            //AC: this is broken at the moment.
             try
             {
-                FileData fileData = await CrossFilePicker.Current.PickFile();
+                FileResult fileData = await FilePicker.PickAsync();
                 if (fileData == null)
                 { 
                     return; // user canceled file picking
                 }
 
                 string fileName = fileData.FileName;
-                string selectedPath = Path.GetDirectoryName(fileData.FilePath);
+                string selectedPath = Path.GetDirectoryName(fileData.FullPath);
                 var files = Directory.GetFiles(selectedPath);
                 if(files.Length > 0)
                 {
