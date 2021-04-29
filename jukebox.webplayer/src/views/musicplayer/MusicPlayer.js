@@ -235,7 +235,7 @@ function MusicPlayer() {
                 {/* SeekBar */}
                    
                   <Row className="justify-content-center m-5">
-                      <input className="seekbar" id="seekbar"  type="range" min="1" max="100" onChange={onSeek}/>   
+                      <input className="seekbar" id="seekbar"  type="range" min="1" max="100" defaultValue="1" onChange={onSeek}/>   
                       
                       <div className="pb-5" id="durationMinInfo"> duration </div>               
                       <br></br>

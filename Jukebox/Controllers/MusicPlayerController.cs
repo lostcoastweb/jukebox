@@ -118,7 +118,8 @@ namespace Jukebox.Controllers
         [Route(HttpVerbs.Get, "/seek/{seekValue}")]
         public async Task<float> Seek(float seekValue)
         {
-            var seek = JukeboxMediaManager.GetInstance().Seek(seekValue);
+            TimeSpan seekTime = TimeSpan.FromSeconds(seekValue);
+            var seek = JukeboxMediaManager.GetInstance().Seek(seekTime);
             return seekValue;
         }
     }
