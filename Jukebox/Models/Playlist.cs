@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Diagnostics;
+
 
 namespace Jukebox.Models
 {
@@ -27,7 +30,24 @@ namespace Jukebox.Models
         //Converts playlist into an ilist for xamarin media manager to use
         public IList<string> AllMusicFilePath()
         {
-            return Songs.Select(s => s.Path).ToList();
+
+            IList<string> relativePaths = Songs.Select(s => s.Path).ToList();
+            IList<string> absolutePaths =  new List<string>();
+            for(int i =0; i<relativePaths.Count();i++)
+            {
+                // Open an existing file, or create a new one.
+                FileInfo fi = new FileInfo(relativePaths[i]);
+                // Determine the full path of the file just created.
+                DirectoryInfo di = fi.Directory;
+
+                var result = Path.Combine(di.ToString(), relativePaths[i].Remove(0, 28));
+                absolutePaths.Add(result.ToString());
+            }
+            for (int i = 0; i < absolutePaths.Count(); i++)
+                Trace.WriteLine(absolutePaths[i]);
+
+
+            return absolutePaths;
         }
     }
 }
