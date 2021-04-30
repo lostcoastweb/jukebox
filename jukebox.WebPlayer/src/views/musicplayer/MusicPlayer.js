@@ -10,6 +10,19 @@ const localIpUrl = require('local-ip-url');
 
 const axios = require('axios').default;
 
+var move;
+
+function moveSeekbar(){
+  const seekbar = document.getElementById("seekbar");
+  move = setInterval(function() {
+    seekbar.stepUp(1);
+     console.log(seekbar.value);
+    },1000);
+}
+
+function stopSeekbar(){
+  clearInterval(move);
+}
 
 export function play(event){
      event.preventDefault();
@@ -18,9 +31,11 @@ export function play(event){
     const title = document.getElementById("titleInfo");
     const artist = document.getElementById("artistInfo");
     const album = document.getElementById("albumInfo");
+    const seekbar = document.getElementById("seekbar");
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
    
+    moveSeekbar();
 
      playBtn.classList.add('hidden');
      playBtn.classList.remove('show');
@@ -59,6 +74,7 @@ export function play(event){
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
 
+     stopSeekbar();
      pauseBtn.classList.remove('show');
      pauseBtn.classList.add('hidden');
      playBtn.classList.add('show');
@@ -87,16 +103,24 @@ export function play(event){
    const title = document.getElementById("titleInfo");
     const artist = document.getElementById("artistInfo");
     const album = document.getElementById("albumInfo");
+    const seekbar = document.getElementById("seekbar");
+
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
      event.preventDefault();
+
+     
    
      axios.get(config.Routes.Next)
         .then((response) => {
            console.log(response.data + "next");
-           title.innerHTML = response.data.Title;
-       artist.innerHTML = response.data.Artist;
-       album.innerHTML = response.data.Album;
+
+        if(title.innerHTML != response.data.Title){
+          seekbar.value = 1;
+        }
+        title.innerHTML = response.data.Title;
+        artist.innerHTML = response.data.Artist;
+        album.innerHTML = response.data.Album;
        if(parseInt(response.data.durationSeconds)< 10)
        {
          var addZeroNum = "0"+response.data.durationSeconds;
@@ -118,12 +142,18 @@ export function play(event){
     const album = document.getElementById("albumInfo");
     const durationSeconds = document.getElementById("durationSecInfo");
     const durationMinutes = document.getElementById("durationMinInfo");
+    const seekbar = document.getElementById("seekbar");
 
      event.preventDefault();
+
+     
 
      axios.get(config.Routes.Prev)
         .then((response) => {
            console.log(response.data + "prev")
+           
+          seekbar.value = 1;
+        
            title.innerHTML = response.data.Title;
        artist.innerHTML = response.data.Artist;
        album.innerHTML = response.data.Album;
