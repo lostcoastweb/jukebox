@@ -45,7 +45,7 @@
 }
 
 .playBtn{
-  background-image: url( '../src/icons/play-solid.svg' );
+  background-image: url( 'views/icons/play-solid.svg' );
   background-repeat: no-repeat;
   height: 45px;  
   width: 45px;
@@ -58,7 +58,7 @@
 }
 
 .pauseBtn{
-  background-image: url( '../src/icons/pause-solid.svg' );
+  background-image: url( 'views/icons/pause-solid.svg' );
   background-repeat: no-repeat;
   height: 45px;  
   width: 45px;
@@ -71,7 +71,7 @@
 }
 
 .prevBtn{
-  background-image: url( '../src/icons/backward-solid.svg' );
+  background-image: url( 'views/icons/backward-solid.svg' );
   background-repeat: no-repeat;
   height: 45px;  
   width: 45px;
@@ -83,7 +83,7 @@
 }
 
 .nextBtn{
-  background-image: url( '../src/icons/forward-solid.svg' );
+  background-image: url( 'views/icons/forward-solid.svg' );
   background-repeat: no-repeat;
   height: 45px;  
   width: 45px;
@@ -94,7 +94,7 @@
   box-shadow: none !important;
 }
 .volDownBtn{
-  background-image: url( '../src/icons/volume-down-solid.svg' );
+  background-image: url( 'views/icons/volume-down-solid.svg' );
   background-repeat: no-repeat;
   height: 45px;  
   width: 25px;
@@ -105,7 +105,7 @@
   box-shadow: none !important;
 }
 .volUpBtn{
-  background-image: url( '../src/icons/volume-up-solid.svg' );
+  background-image: url( 'views/icons/volume-up-solid.svg' );
   background-repeat: no-repeat;
   height: 45px;  
   width: 25px;
@@ -116,7 +116,7 @@
   box-shadow: none !important;
 }
 .muteBtn{
-  background-image: url( '../src/icons/volume-mute-solid.svg' );
+  background-image: url( 'views/icons/volume-mute-solid.svg' );
   background-repeat: no-repeat;
   height: 45px;  
   width: 25px;
