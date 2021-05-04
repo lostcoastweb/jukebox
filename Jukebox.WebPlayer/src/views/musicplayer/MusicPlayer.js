@@ -163,7 +163,7 @@ export function playPrev(event) {
       clearInterval(move);
       moveSeekbar(response.data.seekRate);
 
-      console.log(response.data.isPlaying + "prev");
+      console.log(response.data.isPlaying + "previous");
       if(response.data )
       seekbar.value = 0;
 
