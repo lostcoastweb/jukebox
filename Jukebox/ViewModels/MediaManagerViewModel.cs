@@ -56,7 +56,8 @@ namespace Jukebox.ViewModels
                             Path = file,
                             Title = tfile.Tag.Title,
                             TrackNumber = (int)tfile.Tag.Track,
-                            Year = (int)tfile.Tag.Year
+                            Year = (int)tfile.Tag.Year,
+                            Duration = tfile.Properties.Duration
 
                         };
                         musicFiles.Add(musicFile);

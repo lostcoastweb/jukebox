@@ -22,6 +22,7 @@ namespace Jukebox
             using (var server = new WebServer("http://localhost:8080"))
             {
                 //Assembly assembly = typeof(App).Assembly;
+                server.WithCors();
                 server.WithLocalSessionManager();
                 server.WithCors();
                 server.WithWebApi("/api/config", m => m.WithController(() => new ConfigController()));
