@@ -7,6 +7,7 @@ using MediaManager;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -71,7 +72,7 @@ namespace Jukebox.Controllers
             else
             {
                 await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
-                await Task.Run(() => JukeboxMediaManager.GetInstance().Pause());
+                JukeboxMediaManager.GetInstance().Pause();
             }
             if (CrossMediaManager.Current.Queue.HasNext)
             {
@@ -84,28 +85,57 @@ namespace Jukebox.Controllers
             };
 
         }
+        int newIndex; 
+        void playPrevPause()
+        {
+            JukeboxMediaManager.GetInstance().PlayPrev();
+            JukeboxMediaManager.GetInstance().Pause();
+           
+        }
 
-       
+        void playPrev()
+        {
+            JukeboxMediaManager.GetInstance().PlayPrev();
+            
+        }
+
+        int getNewIndex()
+        {
+            newIndex = CrossMediaManager.Current.Queue.CurrentIndex;
+            return newIndex;
+        }
 
         [Route(HttpVerbs.Get, "/prev")]
         public async Task<Dictionary<string, string>> PreviousTrack()
         {
-            var oldIndex = await Task.Run(() => CrossMediaManager.Current.Queue.CurrentIndex);
+            int oldIndex = CrossMediaManager.Current.Queue.CurrentIndex;
             if (CrossMediaManager.Current.IsPlaying())
             {
-                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayPrev());
-
+                
+                await Task.Run(()=>playPrev());
+                await Task.Run(() => getNewIndex());
             }
             else
             {
-                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayPrev());
-                await Task.Run(() => JukeboxMediaManager.GetInstance().Pause());
+                await Task.Run(() => playPrevPause());
+                await Task.Run(() => getNewIndex());
+
             }
 
 
-            if (await Task.Run(()=> CrossMediaManager.Current.Queue.CurrentIndex != oldIndex))
+            if (CrossMediaManager.Current.Queue.HasPrevious)
             {
-                return JukeboxMediaManager.GetInstance().getPrevMetadata();
+               
+                Trace.WriteLine("old: " + oldIndex + " new: " + newIndex);
+                if (oldIndex != newIndex)
+                {
+                    return JukeboxMediaManager.GetInstance().getPrevMetadata();
+
+                }
+                else
+                {
+                    return JukeboxMediaManager.GetInstance().getCurrentMetadata();
+                }
             }
             else {
                 return JukeboxMediaManager.GetInstance().getCurrentMetadata();
