@@ -63,15 +63,17 @@ namespace Jukebox.Library
             var metaData = new Dictionary<string, string>();
             //get current song index in the playlist
             var index = CrossMediaManager.Current.Queue.CurrentIndex;
-            
+            var seekRate = 100 / (_currentPlaylist.Songs[index ].Duration.TotalSeconds);
 
-                metaData.Add("Title", _currentPlaylist.Songs[index].Title);
+
+            metaData.Add("Title", _currentPlaylist.Songs[index].Title);
                 metaData.Add("Artist", _currentPlaylist.Songs[index].Artist);
                 metaData.Add("Album", _currentPlaylist.Songs[index].Album);
                 metaData.Add("Duration", _currentPlaylist.Songs[index].Duration.ToString());
                 metaData.Add("durationSeconds", _currentPlaylist.Songs[index].Duration.Seconds.ToString());
                 metaData.Add("durationMinutes", _currentPlaylist.Songs[index].Duration.Minutes.ToString());
-
+                metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
+                metaData.Add("seekRate", seekRate.ToString());
 
 
             return metaData;
@@ -82,6 +84,7 @@ namespace Jukebox.Library
             var metaData = new Dictionary<string, string>();
             //get current song index in the playlist
             var index = CrossMediaManager.Current.Queue.CurrentIndex;
+            var seekRate = 100 / (_currentPlaylist.Songs[index + 1].Duration.TotalSeconds);
 
 
             metaData.Add("Title", _currentPlaylist.Songs[index+1].Title);
@@ -89,6 +92,8 @@ namespace Jukebox.Library
             metaData.Add("Album", _currentPlaylist.Songs[index+1].Album);
             metaData.Add("durationSeconds", _currentPlaylist.Songs[index+1].Duration.Seconds.ToString());
             metaData.Add("durationMinutes", _currentPlaylist.Songs[index+1].Duration.Minutes.ToString());
+            metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
+            metaData.Add("seekRate", seekRate.ToString());
 
 
 
@@ -100,6 +105,7 @@ namespace Jukebox.Library
             var metaData = new Dictionary<string, string>();
             //get current song index in the playlist
             var index = CrossMediaManager.Current.Queue.CurrentIndex;
+            var seekRate = 100 / (_currentPlaylist.Songs[index - 1].Duration.TotalSeconds);
 
 
             metaData.Add("Title", _currentPlaylist.Songs[index-1].Title);
@@ -107,6 +113,10 @@ namespace Jukebox.Library
             metaData.Add("Album", _currentPlaylist.Songs[index-1].Album);
             metaData.Add("durationSeconds", _currentPlaylist.Songs[index-1].Duration.Seconds.ToString());
             metaData.Add("durationMinutes", _currentPlaylist.Songs[index-1].Duration.Minutes.ToString());
+            metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
+           
+
+            metaData.Add("seekRate", seekRate.ToString());
 
 
 

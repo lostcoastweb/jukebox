@@ -12,10 +12,15 @@ const axios = require("axios").default;
 
 var move;
 
-function moveSeekbar() {
+function moveSeekbar(seekRate) {
   const seekbar = document.getElementById("seekbar");
+  var durationSeconds = parseInt(document.getElementById("durationSecInfo").innerHTML);
+  var durationMinutes = parseInt(document.getElementById("durationMinInfo").innerHTML);
+  //var totalSeconds = (durationMinutes*60)+durationSeconds;
+  //var seekRate = parseFloat(100/totalSeconds);
+  console.log("seekRate: " + seekRate);
   move = setInterval(function () {
-    seekbar.stepUp(1);
+    seekbar.stepUp(parseFloat(seekRate * 10));
     console.log(seekbar.value);
   }, 1000);
 }
@@ -35,7 +40,7 @@ export function play(event) {
   const durationSeconds = document.getElementById("durationSecInfo");
   const durationMinutes = document.getElementById("durationMinInfo");
 
-  moveSeekbar();
+  
 
   playBtn.classList.add("hidden");
   playBtn.classList.remove("show");
@@ -45,6 +50,8 @@ export function play(event) {
   axios
     .get(config.Routes.Play)
     .then((response) => {
+      clearInterval(move);
+      moveSeekbar(response.data.seekRate);
       console.log(response.data.Title);
       title.innerHTML = response.data.Title;
       artist.innerHTML = response.data.Artist;
@@ -83,6 +90,8 @@ export function pause(event) {
   axios
     .get(config.Routes.Pause)
     .then((response) => {
+      stopSeekbar();
+
       console.log(response.data.Title);
       title.innerHTML = response.data.Title;
       artist.innerHTML = response.data.Artist;
@@ -114,10 +123,12 @@ export function playNext(event) {
   axios
     .get(config.Routes.Next)
     .then((response) => {
-      console.log(response.data + "next");
+      console.log(response.data.isPlaying + "next");
+      clearInterval(move);
+      moveSeekbar(response.data.seekRate);
 
-      if (title.innerHTML != response.data.Title) {
-        seekbar.value = 1;
+      if (title.innerHTML !== response.data.Title) {
+        seekbar.value = 0;
       }
       title.innerHTML = response.data.Title;
       artist.innerHTML = response.data.Artist;
@@ -149,9 +160,12 @@ export function playPrev(event) {
   axios
     .get(config.Routes.Prev)
     .then((response) => {
-      console.log(response.data + "prev");
+      clearInterval(move);
+      moveSeekbar(response.data.seekRate);
 
-      seekbar.value = 1;
+      console.log(response.data.isPlaying + "prev");
+      if(response.data )
+      seekbar.value = 0;
 
       title.innerHTML = response.data.Title;
       artist.innerHTML = response.data.Artist;
@@ -275,9 +289,10 @@ function MusicPlayer() {
             className="seekbar"
             id="seekbar"
             type="range"
-            min="1"
+            min="0"
             max="100"
-            defaultValue="1"
+            defaultValue="0"
+            step = ".1"
             onChange={onSeek}
           />
 

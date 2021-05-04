@@ -64,8 +64,16 @@ namespace Jukebox.Controllers
         [Route(HttpVerbs.Get, "/next")]
         public async Task<Dictionary<string, string>>  NextTrack()
         {
-            await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
-            if(CrossMediaManager.Current.Queue.HasNext)
+            if(CrossMediaManager.Current.IsPlaying())
+            {
+                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
+            }
+            else
+            {
+                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
+                await Task.Run(() => JukeboxMediaManager.GetInstance().Pause());
+            }
+            if (CrossMediaManager.Current.Queue.HasNext)
             {
                 return JukeboxMediaManager.GetInstance().getNextMetadata();
 
@@ -82,15 +90,27 @@ namespace Jukebox.Controllers
         [Route(HttpVerbs.Get, "/prev")]
         public async Task<Dictionary<string, string>> PreviousTrack()
         {
-            await Task.Run(()=> JukeboxMediaManager.GetInstance().PlayPrev());
-            if (CrossMediaManager.Current.Queue.HasPrevious)
+            var oldIndex = await Task.Run(() => CrossMediaManager.Current.Queue.CurrentIndex);
+            if (CrossMediaManager.Current.IsPlaying())
+            {
+                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayPrev());
+
+            }
+            else
+            {
+                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayPrev());
+                await Task.Run(() => JukeboxMediaManager.GetInstance().Pause());
+            }
+
+
+            if (await Task.Run(()=> CrossMediaManager.Current.Queue.CurrentIndex != oldIndex))
             {
                 return JukeboxMediaManager.GetInstance().getPrevMetadata();
             }
             else {
                 return JukeboxMediaManager.GetInstance().getCurrentMetadata();
             };
-               
+
         }
 
         [Route(HttpVerbs.Get, "/volDown")]
