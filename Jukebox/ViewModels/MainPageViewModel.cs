@@ -84,7 +84,7 @@ namespace Jukebox.ViewModels
         }
         private async Task PrevSong()
         {
-            await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
+            await CrossMediaManager.Current.PlayPrevious();
         }
 
         private async Task PauseMusic()
