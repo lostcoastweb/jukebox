@@ -8,6 +8,8 @@ namespace Jukebox.Models
     public class Playlist
     {
         public string Name { get; set; }
+
+        public int ID { get; set; }
         public List<MusicFile> Songs { get; set; }
         public int CurrentSongIndex { get; set; }
         public MusicFile CurrentSong
