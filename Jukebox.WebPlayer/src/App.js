@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 import MusicPlayer from './views/musicplayer/MusicPlayer';
 import PlaylistContainer from './views/playlistcontainer/PlaylistContainer';
@@ -11,7 +11,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <h1 className="text-center m-5">Jukebox</h1>
+      <Link to="/"><h1 className="text-center m-5">Jukebox</h1></Link>
       <Route exact path="/">
 
         <MusicPlayer />

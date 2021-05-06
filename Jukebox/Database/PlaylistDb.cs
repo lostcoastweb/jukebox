@@ -32,6 +32,16 @@ namespace Jukebox.Database
             return items;
         }
 
+        public async Task<Playlist> Select(int id)
+        {
+            _db.Open();
+            string sql = @"SELECT * FROM playlists WHERE id = @id LIMIT 1";
+            IEnumerable<Playlist> result = await _db.QueryAsync<Playlist>(sql, new { id = id });
+            var item = result.ToList()[0];
+            _db.Close();
+            return item;
+        }
+
         public async Task<bool> Add(Playlist playlist)
         {
             _db.Open();

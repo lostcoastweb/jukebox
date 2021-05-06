@@ -10,7 +10,7 @@ const axios = require('axios').default;
 
 const SearchSongs = (searchTerm, setList) => {
     axios.get(`http://localhost:8080/api/media/search/${searchTerm}`).then((response) => {
-        setList(JSON.parse(response.data.slice(1, response.data.length-1)));
+        setList(response.data);
     }).catch((reason) => {
         console.error("Error encountered: ", reason);
     });
@@ -18,10 +18,13 @@ const SearchSongs = (searchTerm, setList) => {
 
 const GetSongs = (setList) => {
     axios.get('http://localhost:8080/api/music/files').then((response) => {
-        setList(JSON.parse(response.data.slice(1, response.data.length-1)));
+        setList(response.data);
     }).catch((reason) => {
         console.error("Error encountered: ", reason);
     });
+};
+
+const GetPlaylist = (setList) => {
 };
 
 const PlaylistManager = () => {
@@ -38,6 +41,7 @@ const PlaylistManager = () => {
     };*/
 
     const onMove = (item) => {
+        GetPlaylist(setPlaylistSongs);
         if (/*songList !== undefined && songList !== null &&*/ songList.findIndex(j => j === item) !== -1) {
             console.log("1");
             setPlaylistSongs([...playlistSongs, item]);
@@ -72,13 +76,13 @@ const PlaylistManager = () => {
                     Songs
                     <hr />
                     <form onSubmit={onSearch}>Search: <input type="search" value={searchTerm} style={{ margin: '10px' }} onChange={searchChange}/></form>
-                    {songList === undefined ? (<>True</>) : (<SongList list={songList} onMove={onMove} />)}
+                    {songList === undefined ? (<>No songs detected =(</>) : (<SongList list={songList} onMove={onMove} />)}
                     {/**/}
                 </Container>
             </Col>
 
             <Col className="margin-40px">
-                <Container className="centered player-border mt-5">
+                <Container id="playlist_container" className="centered player-border mt-5">
                     Playlist
                     <hr />
                     <SongList list={playlistSongs} onMove={onMove} />

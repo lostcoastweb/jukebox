@@ -7,8 +7,6 @@ import config from '../../appsettings.json'
 import React from 'react';
 
 import '../../App.css';
-import PlaylistContainer from '../playlistcontainer/PlaylistContainer';
-import PlaylistManager from '../playlistmanager/PlaylistManager';
 import { useState } from 'react';
 const localIpUrl = require('local-ip-url');
 

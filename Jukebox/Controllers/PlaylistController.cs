@@ -23,7 +23,6 @@ namespace Jukebox.Controllers
         [Route(HttpVerbs.Get, "/")]
         public async Task<IEnumerable<Playlist>> GetAllPlaylists()
         {
-            List<string> playlists = new List<string>();
             var music_files = await _pdb.All();
             
             return music_files;
@@ -44,9 +43,10 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/{id}")]
-        public async Task<string> GetPlaylist(int id)
+        public async Task<Playlist> GetPlaylist(int id)
         {
-            return "";
+            Playlist playlist = await _pdb.Select(id);
+            return playlist;
         }
     }
 }

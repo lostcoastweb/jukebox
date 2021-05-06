@@ -54,7 +54,7 @@ const newPlaylist = (name, playlists, setCurrPlaylist, setPlaylists, setNewName)
 const PlaylistContainer = () => {
 
     const [playlists, setPlaylists] = React.useState([
-        {'name': "My playlist 1"},
+        {'name': "My playlist 1", tracks: [{"title": "Holy Diver", 'artist': 'Dio'}]},
         {'name': "Metal playlist"},
     ]
     );
