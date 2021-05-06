@@ -34,12 +34,45 @@ namespace Jukebox.Database
 
         public async Task<Playlist> Select(int id)
         {
-            _db.Open();
-            string sql = @"SELECT * FROM playlists WHERE id = @id LIMIT 1";
+            /*_db.Open();
+            string sql = @"SELECT p.name, p.id, pm.music_id, mf.album, mf.artist, mf.title FROM playlists p
+                            INNER JOIN playlist_music pm ON pm.playlist_id = p.id 
+                            INNER JOIN music_files mf ON pm.music_id = mf.id
+                            WHERE p.id = @id";
+
             IEnumerable<Playlist> result = await _db.QueryAsync<Playlist>(sql, new { id = id });
             var item = result.ToList()[0];
             _db.Close();
-            return item;
+            return item;*/
+
+            //
+            // referenced extensively from: https://dapper-tutorial.net/query#example---query-multi-mapping-one-to-many
+            //
+
+            string sql = "SELECT TOP 10 * FROM Orders AS A INNER JOIN OrderDetails AS B ON A.OrderID = B.OrderID;";
+
+            var playlistDictionary = new Dictionary<int, Playlist>();
+
+            var list = _db.Query<Playlist, MusicFile, Playlist>(sql,
+            (playlist, music) =>
+            {
+                Playlist playlistEntry;
+
+                if (!playlistDictionary.TryGetValue(music.Id, out playlistEntry))
+                {
+                    playlistEntry = playlist;
+                    playlistEntry.Songs = new List<MusicFile>();
+                    playlistDictionary.Add(playlist.ID, playlistEntry);
+                }
+
+                playlistEntry.Songs.Add(music);
+                return playlistEntry;
+            },
+            splitOn: "id")
+            .Distinct()
+            .ToList();
+
+            Console.WriteLine(list.Count);
         }
 
         public async Task<bool> Add(Playlist playlist)
