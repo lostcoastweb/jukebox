@@ -162,7 +162,7 @@ namespace Jukebox.Library
         {
             Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
             {
-                await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
+                await CrossMediaManager.Current.PlayPrevious();
             });
         }
 

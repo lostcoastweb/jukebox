@@ -85,7 +85,7 @@ namespace Jukebox.Controllers
             };
 
         }
-        int newIndex; 
+     
         void playPrevPause()
         {
             JukeboxMediaManager.GetInstance().PlayPrev();
@@ -99,43 +99,25 @@ namespace Jukebox.Controllers
             
         }
 
-        int getNewIndex()
-        {
-            newIndex = CrossMediaManager.Current.Queue.CurrentIndex;
-            return newIndex;
-        }
 
         [Route(HttpVerbs.Get, "/prev")]
         public async Task<Dictionary<string, string>> PreviousTrack()
         {
-            int oldIndex = CrossMediaManager.Current.Queue.CurrentIndex;
             if (CrossMediaManager.Current.IsPlaying())
             {
                 
                 await Task.Run(()=>playPrev());
-                await Task.Run(() => getNewIndex());
             }
             else
             {
                 await Task.Run(() => playPrevPause());
-                await Task.Run(() => getNewIndex());
-
             }
 
 
             if (CrossMediaManager.Current.Queue.HasPrevious)
             {
-               
-                Trace.WriteLine("old: " + oldIndex + " new: " + newIndex);
-                if (oldIndex != newIndex)
-                {
-                    return JukeboxMediaManager.GetInstance().getPrevMetadata();
-
-                }
-                else
-                {
-                    return JukeboxMediaManager.GetInstance().getCurrentMetadata();
-                }
+                 
+                    return JukeboxMediaManager.GetInstance().getPrevMetadata();          
             }
             else {
                 return JukeboxMediaManager.GetInstance().getCurrentMetadata();
