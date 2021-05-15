@@ -50,6 +50,8 @@ namespace Jukebox.Database
 
             _db.Open();
 
+            // referenced from: https://dapper-tutorial.net/querymultiple
+
             Playlist playlist;
             using (var multi = _db.QueryMultiple(sql, new { pid = id }))
             {
