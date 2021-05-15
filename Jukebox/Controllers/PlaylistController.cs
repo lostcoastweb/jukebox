@@ -60,6 +60,50 @@ namespace Jukebox.Controllers
             return false;
         }
 
+        [Route(HttpVerbs.Post, "/update")]
+        public async Task<bool> UpdatePostPlaylist()
+        {
+            var rawData = await HttpContext.GetRequestFormDataAsync();
+            if (rawData.Get("id") != null && rawData.Get("songs") != null)
+            {
+                Playlist playlist = new Playlist();
+
+                int pid;
+                bool parse_success = int.TryParse(rawData.Get("id"), out pid);
+
+                if (parse_success)
+                {
+                    playlist.Id = pid;
+                }
+                else
+                {
+                    throw new Exception("ID provided not an integer.");
+                }
+
+                List<MusicFile> songs = new List<MusicFile>();
+                var ids = rawData.Get("songs").Split(',');
+                foreach (string id in ids)
+                {
+                    int song_id;
+                    bool parse = int.TryParse(id, out song_id);
+                    if (parse)
+                    {
+                        var song = new MusicFile();
+                        song.Id = song_id;
+                        songs.Add(song);
+                    }
+                    else
+                    {
+                        throw new Exception("Non integer song ID found in urlencoded data.");
+                    }
+                }
+                playlist.Songs = songs;
+                return await _pdb.Update(playlist);
+            }
+
+            return false;
+        }
+
         [Route(HttpVerbs.Get, "/{id}")]
         public async Task<Playlist> GetPlaylist(string id)
         {

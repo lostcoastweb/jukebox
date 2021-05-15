@@ -128,12 +128,33 @@ namespace Jukebox.Database
             return affectedRows >= 1;
         }
         
-        // TODO
-        /*public async Task<bool> Update(Playlist playlist)
+        public async Task<bool> Update(Playlist playlist)
         {
             _db.Open();
-            
-        }*/
+            string sql = @"DELETE FROM playlist_music WHERE playlist_id = @pid";
+            var affectedRows = 0;
+            try
+            {
+                string playlist_update_sql = @"UPDATE playlists SET last_modified = @modified WHERE id = @pid";
+                string datetime = DateTime.Now.ToString("%y-%M-%d %H:%m:%s");
+                affectedRows = await _db.ExecuteAsync(playlist_update_sql,
+                new { modified = datetime, pid = playlist.Id });
+
+                await _db.ExecuteAsync(sql, new { pid = playlist.Id });
+
+                string song_sql = @"INSERT INTO playlist_music (playlist_id, music_id) VALUES (@pid, @id)";
+                foreach (MusicFile song in playlist.Songs)
+                {
+                    affectedRows += await _db.ExecuteAsync(song_sql, new { pid = playlist.Id, id = song.Id });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            _db.Close();
+            return affectedRows >= 1;
+        }
 
         public static PlaylistDb GetInstance()
         {
