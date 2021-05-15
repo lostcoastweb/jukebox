@@ -32,7 +32,6 @@ namespace Jukebox
                 server.WithWebApi("/api/playlist", m => m.WithController(() => new PlaylistController()));
 				//server.WithWebApi("/api", m => m.WithController(() => new TestController()));
                 //server.WithEmbeddedResources("/", assembly, "EmbedIO.Forms.Sample.html");
-                Debug.WriteLine("\ntest\n");
                 await server.RunAsync();
             }
         }

@@ -55,7 +55,7 @@ namespace Jukebox.ViewModels
                             Artist = tfile.Tag.FirstAlbumArtist,
                             Path = file,
                             Title = tfile.Tag.Title,
-                            TrackNumber = (int)tfile.Tag.Track,
+                            Track_Number = (int)tfile.Tag.Track,
                             Year = (int)tfile.Tag.Year
 
                         };

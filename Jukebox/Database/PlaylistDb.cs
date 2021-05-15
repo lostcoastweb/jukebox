@@ -45,14 +45,32 @@ namespace Jukebox.Database
             _db.Close();
             return item;*/
 
+
+            string sql = "SELECT * FROM playlists WHERE id = @pid; SELECT music_id as id, mf.album, mf.artist, mf.title, mf.path, mf.year, mf.track_number FROM playlists p INNER JOIN playlist_music pm ON pm.playlist_id = p.id INNER JOIN music_files mf ON pm.music_id = mf.id WHERE p.id = @pid; ";
+
+            _db.Open();
+
+            Playlist playlist;
+            using (var multi = _db.QueryMultiple(sql, new { pid = id }))
+            {
+                playlist = multi.Read<Playlist>().First();
+                var songs = multi.Read<MusicFile>().ToList();
+                playlist.Songs = songs;
+            }
+            _db.Close();
+            return playlist;
+
             //
             // referenced extensively from: https://dapper-tutorial.net/query#example---query-multi-mapping-one-to-many
             //
 
-            string sql = "SELECT * FROM playlists AS A INNER JOIN playlist_music AS B ON A.id = B.playlist_id WHERE A.id = @id LIMIT 10";
+            /*string sql = "SELECT * FROM playlists AS A INNER JOIN playlist_music AS B ON A.id = B.playlist_id WHERE A.id = @id LIMIT 10";
 
             var playlistDictionary = new Dictionary<int, Playlist>();
 
+            // As a final note, the only issue I see with this method compared to the reference above is that the splitOn
+            //  appears to identify ambiguously between the 
+            
             return _db.Query<Playlist, MusicFile, Playlist>(sql,
             (playlist, music) =>
             {
@@ -68,9 +86,9 @@ namespace Jukebox.Database
                 playlistEntry.Songs.Add(music);
                 return playlistEntry;
             }, param: new {id = id},
-            splitOn: "id")
+            splitOn: "playlist_id")
             .Distinct()
-            .ToList()[0];
+            .ToList()[0];*/
         }
 
         public async Task<bool> Add(Playlist playlist)
@@ -109,6 +127,13 @@ namespace Jukebox.Database
             _db.Close();
             return affectedRows >= 1;
         }
+        
+        // TODO
+        /*public async Task<bool> Update(Playlist playlist)
+        {
+            _db.Open();
+            
+        }*/
 
         public static PlaylistDb GetInstance()
         {
