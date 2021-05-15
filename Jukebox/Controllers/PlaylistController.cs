@@ -32,10 +32,28 @@ namespace Jukebox.Controllers
         public async Task<bool> PostPlaylist()
         {
             var rawData = await HttpContext.GetRequestFormDataAsync();
-            if (rawData.Get("name") != null)
+            if (rawData.Get("name") != null && rawData.Get("songs") != null)
             {
                 Playlist playlist = new Playlist();
                 playlist.Name = rawData.Get("name");
+                List<MusicFile> songs = new List<MusicFile>();
+                var ids = rawData.Get("songs").Split(',');
+                foreach (string id in ids)
+                {
+                    int song_id;
+                    bool parse = int.TryParse(id, out song_id);
+                    if (parse)
+                    {
+                        var song = new MusicFile();
+                        song.Id = song_id;
+                        songs.Add(song);
+                    }
+                    else
+                    {
+                        throw new Exception("Non integer song ID found in urlencoded data.");
+                    }
+                }
+                playlist.Songs = songs;
                 return await _pdb.Add(playlist);
             }
 
@@ -43,10 +61,19 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/{id}")]
-        public async Task<Playlist> GetPlaylist(int id)
+        public async Task<Playlist> GetPlaylist(string id)
         {
-            Playlist playlist = await _pdb.Select(id);
-            return playlist;
+            int int_id = 0;
+            bool success = int.TryParse(id, out int_id);
+            if (success)
+            {
+                Playlist playlist = await _pdb.Select(int_id);
+                return playlist;
+            }
+            else
+            {
+                return new Playlist();
+            }
         }
     }
 }

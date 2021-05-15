@@ -49,11 +49,11 @@ namespace Jukebox.Database
             // referenced extensively from: https://dapper-tutorial.net/query#example---query-multi-mapping-one-to-many
             //
 
-            string sql = "SELECT TOP 10 * FROM Orders AS A INNER JOIN OrderDetails AS B ON A.OrderID = B.OrderID;";
+            string sql = "SELECT * FROM playlists AS A INNER JOIN playlist_music AS B ON A.id = B.playlist_id WHERE A.id = @id LIMIT 10";
 
             var playlistDictionary = new Dictionary<int, Playlist>();
 
-            var list = _db.Query<Playlist, MusicFile, Playlist>(sql,
+            return _db.Query<Playlist, MusicFile, Playlist>(sql,
             (playlist, music) =>
             {
                 Playlist playlistEntry;
@@ -67,12 +67,10 @@ namespace Jukebox.Database
 
                 playlistEntry.Songs.Add(music);
                 return playlistEntry;
-            },
+            }, param: new {id = id},
             splitOn: "id")
             .Distinct()
-            .ToList();
-
-            Console.WriteLine(list.Count);
+            .ToList()[0];
         }
 
         public async Task<bool> Add(Playlist playlist)
@@ -91,16 +89,25 @@ namespace Jukebox.Database
             var affectedRows = 0;
             try
             {
-                string datetime = DateTime.Now.ToString("%Y-%M-%D %HH:%mm:%ss");
+                string datetime = DateTime.Now.ToString("%y-%M-%d %H:%m:%s");
                 affectedRows = await _db.ExecuteAsync(sql,
-                new { name = playlist.Name, date_created = datetime, last_modified = datetime });
+                new { name = playlist.Name, date = datetime, modified = datetime });
+
+                string id_sql = @"select last_insert_rowid()";
+                var id = await _db.ExecuteScalarAsync(id_sql);
+
+                string song_sql = @"INSERT INTO playlist_music (playlist_id, music_id) VALUES (@pid, @id)";
+                foreach (MusicFile song in playlist.Songs)
+                {
+                    affectedRows += await _db.ExecuteAsync(song_sql, new { pid = id, id = song.Id });
+                }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
             _db.Close();
-            return affectedRows == 1;
+            return affectedRows >= 1;
         }
 
         public static PlaylistDb GetInstance()
