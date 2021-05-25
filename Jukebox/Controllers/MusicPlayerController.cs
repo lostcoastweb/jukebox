@@ -8,6 +8,7 @@ using MediaManager;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -17,8 +18,6 @@ namespace Jukebox.Controllers
     public class MusicPlayerController : WebApiController
     {
         protected JukeboxDb _db;
-
-      
 
         public MusicPlayerController()
         {
@@ -39,11 +38,11 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/play")]
-        public string PlayMusic()
+        public Dictionary<string, string> PlayMusic()
         {
             JukeboxMediaManager.GetInstance().Play();
-            
-            return "play";
+
+            return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 
         [Route(HttpVerbs.Get, "/play/{id}")]
@@ -55,24 +54,75 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/pause")]
-        public string PauseMusic()
+        public Dictionary<string, string> PauseMusic()
         {
             JukeboxMediaManager.GetInstance().Pause();
-            return "";
+           
+
+            return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 
         [Route(HttpVerbs.Get, "/next")]
-        public async Task<string> NextTrack()
+        public async Task<Dictionary<string, string>>  NextTrack()
         {
-            JukeboxMediaManager.GetInstance().PlayNext();
-            return "";
-        }
+            if(CrossMediaManager.Current.IsPlaying())
+            {
+                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
+            }
+            else
+            {
+                await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
+                JukeboxMediaManager.GetInstance().Pause();
+            }
+            if (CrossMediaManager.Current.Queue.HasNext)
+            {
+                return JukeboxMediaManager.GetInstance().getNextMetadata();
 
-        [Route(HttpVerbs.Get, "/prev")]
-        public async Task<string> PreviousTrack()
+            }
+            else
+            {
+                return JukeboxMediaManager.GetInstance().getCurrentMetadata();
+            };
+
+        }
+     
+        void playPrevPause()
         {
             JukeboxMediaManager.GetInstance().PlayPrev();
-            return "";
+            JukeboxMediaManager.GetInstance().Pause();
+           
+        }
+
+        void playPrev()
+        {
+            JukeboxMediaManager.GetInstance().PlayPrev();
+            
+        }
+
+
+        [Route(HttpVerbs.Get, "/prev")]
+        public async Task<Dictionary<string, string>> PreviousTrack()
+        {
+            if (CrossMediaManager.Current.IsPlaying())
+            {
+                
+                await Task.Run(()=>playPrev());
+            }
+            else
+            {
+                await Task.Run(() => playPrevPause());
+            }
+
+
+            if (CrossMediaManager.Current.Queue.HasPrevious)
+            {
+                 
+                    return JukeboxMediaManager.GetInstance().getPrevMetadata();          
+            }
+            else {
+                return JukeboxMediaManager.GetInstance().getCurrentMetadata();
+            };
+
         }
 
         [Route(HttpVerbs.Get, "/volDown")]
@@ -94,6 +144,15 @@ namespace Jukebox.Controllers
         {
             JukeboxMediaManager.GetInstance().Mute();
             return "";
+        }
+
+
+        [Route(HttpVerbs.Get, "/seek/{seekValue}")]
+        public async Task<float> Seek(float seekValue)
+        {
+            TimeSpan seekTime = TimeSpan.FromSeconds(seekValue);
+            var seek = JukeboxMediaManager.GetInstance().Seek(seekTime);
+            return seekValue;
         }
     }
 }

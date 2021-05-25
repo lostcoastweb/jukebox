@@ -1,4 +1,4 @@
-﻿using Jukebox.Database;
+using Jukebox.Database;
 using Jukebox.Models;
 using System;
 using System.Collections.Generic;
@@ -55,8 +55,9 @@ namespace Jukebox.ViewModels
                             Artist = tfile.Tag.FirstAlbumArtist,
                             Path = file,
                             Title = tfile.Tag.Title,
-                            Track_Number = (int)tfile.Tag.Track,
-                            Year = (int)tfile.Tag.Year
+                            TrackNumber = (int)tfile.Tag.Track,
+                            Year = (int)tfile.Tag.Year,
+                            Duration = tfile.Properties.Duration
 
                         };
                         musicFiles.Add(musicFile);

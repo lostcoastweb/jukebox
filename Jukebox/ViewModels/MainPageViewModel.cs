@@ -28,7 +28,6 @@ namespace Jukebox.ViewModels
 
         protected Playlist activePlaylist = new Playlist();
 
-        public IList<string> myPlaylist;
 
         public MainPageViewModel() : base()
         {
@@ -48,7 +47,8 @@ namespace Jukebox.ViewModels
                 Album = "album1",
                 Title = "song1",
                 Artist = "artist1",
-                Path = "C:/Users/acarter/Music/Alabama Shakes/Boys & Girls [+digital booklet]/01-01- Hold On.mp3"
+                Path = "..\\..\\..\\..\\jukeboxPlaylist\\disco-funk-loop.mp3",
+                Duration = TagLib.File.Create("..\\..\\..\\..\\jukeboxPlaylist\\disco-funk-loop.mp3").Properties.Duration
             });
             activePlaylist.Songs.Add(new MusicFile
             {
@@ -58,7 +58,8 @@ namespace Jukebox.ViewModels
                 Album = "album2",
                 Title = "song2",
                 Artist = "artist2",
-                Path = "C:/Users/dbjer/Music/playlist/track2.mp3"
+                Path = "..\\..\\..\\..\\jukeboxPlaylist\\guitar-music.mp3",
+                Duration = TagLib.File.Create("..\\..\\..\\..\\jukeboxPlaylist\\guitar-music.mp3").Properties.Duration
             });
             activePlaylist.Songs.Add(new MusicFile
             {
@@ -68,13 +69,11 @@ namespace Jukebox.ViewModels
                 Album = "album3",
                 Title = "song3",
                 Artist = "artist3",
-                Path = "C:/Users/dbjer/Music/playlist/track3.mp3"
+                Path = "..\\..\\..\\..\\jukeboxPlaylist\\jazz-beat.mp3",
+                Duration = TagLib.File.Create("..\\..\\..\\..\\jukeboxPlaylist\\jazz-beat.mp3").Properties.Duration
             });
-            
-            myPlaylist = new string[] { activePlaylist.Songs[0].Path,
-                                        activePlaylist.Songs[1].Path,
-                                        activePlaylist.Songs[2].Path};
-          
+            JukeboxMediaManager.makePlaylist(activePlaylist);
+
 
 
         }
@@ -85,7 +84,7 @@ namespace Jukebox.ViewModels
         }
         private async Task PrevSong()
         {
-            await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
+            await CrossMediaManager.Current.PlayPrevious();
         }
 
         private async Task PauseMusic()
@@ -108,7 +107,7 @@ namespace Jukebox.ViewModels
             //var musicPlayer = await MediaServer.GetInstance();
             //await musicPlayer.Play();
         }
-
+        
         private async Task PlayMusic(string path)
         {
             var musicPlayer = Library.JukeboxMediaManager.GetInstance();

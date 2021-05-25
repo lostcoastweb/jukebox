@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Jukebox.ViewModels;
+using Newtonsoft.Json;
 
 
 namespace Jukebox.Library
@@ -18,14 +20,19 @@ namespace Jukebox.Library
         private bool IsAudioPlaying = false;
         private readonly object IsAudioPlayingLock = new object();
 
-        private Playlist _currentPlaylist = new Playlist();
+        public static Playlist _currentPlaylist = new Playlist();
         private static JukeboxMediaManager _instance;
 
         //protected Playlist activePlaylist = new Playlist();
 
+        public static void makePlaylist(Playlist playlist)
+        {
+            _currentPlaylist = playlist;
+        }
+
         private JukeboxMediaManager()
         {
-          
+            
 
         }
 
@@ -50,6 +57,72 @@ namespace Jukebox.Library
         private static void Current_MediaItemFinished(object sender, global::MediaManager.Media.MediaItemEventArgs e)
         {
         }
+
+        public Dictionary<string, string> getCurrentMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+            var seekRate = 100 / (_currentPlaylist.Songs[index ].Duration.TotalSeconds);
+
+
+            metaData.Add("Title", _currentPlaylist.Songs[index].Title);
+                metaData.Add("Artist", _currentPlaylist.Songs[index].Artist);
+                metaData.Add("Album", _currentPlaylist.Songs[index].Album);
+                metaData.Add("Duration", _currentPlaylist.Songs[index].Duration.ToString());
+                metaData.Add("durationSeconds", _currentPlaylist.Songs[index].Duration.Seconds.ToString());
+                metaData.Add("durationMinutes", _currentPlaylist.Songs[index].Duration.Minutes.ToString());
+                metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
+                metaData.Add("seekRate", seekRate.ToString());
+
+
+            return metaData;
+        }
+
+        public Dictionary<string, string> getNextMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+            var seekRate = 100 / (_currentPlaylist.Songs[index + 1].Duration.TotalSeconds);
+
+
+            metaData.Add("Title", _currentPlaylist.Songs[index+1].Title);
+            metaData.Add("Artist", _currentPlaylist.Songs[index+1].Artist);
+            metaData.Add("Album", _currentPlaylist.Songs[index+1].Album);
+            metaData.Add("durationSeconds", _currentPlaylist.Songs[index+1].Duration.Seconds.ToString());
+            metaData.Add("durationMinutes", _currentPlaylist.Songs[index+1].Duration.Minutes.ToString());
+            metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
+            metaData.Add("seekRate", seekRate.ToString());
+
+
+
+            return metaData;
+        }
+
+        public Dictionary<string, string> getPrevMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+            var seekRate = 100 / (_currentPlaylist.Songs[index - 1].Duration.TotalSeconds);
+
+
+            metaData.Add("Title", _currentPlaylist.Songs[index-1].Title);
+            metaData.Add("Artist", _currentPlaylist.Songs[index-1].Artist);
+            metaData.Add("Album", _currentPlaylist.Songs[index-1].Album);
+            metaData.Add("durationSeconds", _currentPlaylist.Songs[index-1].Duration.Seconds.ToString());
+            metaData.Add("durationMinutes", _currentPlaylist.Songs[index-1].Duration.Minutes.ToString());
+            metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
+           
+
+            metaData.Add("seekRate", seekRate.ToString());
+
+
+
+            return metaData;
+        }
+
 
         public void Play()
         {
@@ -89,7 +162,7 @@ namespace Jukebox.Library
         {
             Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
             {
-                await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
+                await CrossMediaManager.Current.PlayPrevious();
             });
         }
 
@@ -97,6 +170,7 @@ namespace Jukebox.Library
         {
             
             Application.Current.Dispatcher.BeginInvokeOnMainThread(() => {
+                CrossMediaManager.Current.Volume.MaxVolume = 1;
 
                 CrossMediaManager.Current.Volume.CurrentVolume = 0;
             }
@@ -105,7 +179,7 @@ namespace Jukebox.Library
 
         public void VolDown()
         {
-            CrossMediaManager.Current.Volume.CurrentVolume =0;
+            CrossMediaManager.Current.Volume.CurrentVolume = 0;
         }
 
         public void VolumeUp()
@@ -125,7 +199,14 @@ namespace Jukebox.Library
                 
             });
         }
-
+        public int Seek(TimeSpan seekValue)
+        {
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(async () =>
+            {
+                await CrossMediaManager.Current.SeekTo(seekValue);
+            });
+            return 1;
+        }
         //public void Start()
         //{
         //    lock(ServerIsRunningLock)

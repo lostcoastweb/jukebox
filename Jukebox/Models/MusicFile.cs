@@ -12,6 +12,8 @@ namespace Jukebox.Models
         public string Artist { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
-        public int Track_Number { get; set; }
+        public int TrackNumber { get; set; }
+
+        public TimeSpan Duration { get; set; }
     }
 }
