@@ -43,7 +43,7 @@ namespace Jukebox.ViewModels
             {
                 Id=1,
                 Year=2000,
-                Track_Number=1,
+                TrackNumber=1,
                 Album = "album1",
                 Title = "song1",
                 Artist = "artist1",
@@ -54,7 +54,7 @@ namespace Jukebox.ViewModels
             {
                 Id = 2,
                 Year = 2000,
-                Track_Number = 2,
+                TrackNumber = 2,
                 Album = "album2",
                 Title = "song2",
                 Artist = "artist2",
@@ -65,7 +65,7 @@ namespace Jukebox.ViewModels
             {
                 Id = 3,
                 Year = 2000,
-                Track_Number = 3,
+                TrackNumber = 3,
                 Album = "album3",
                 Title = "song3",
                 Artist = "artist3",

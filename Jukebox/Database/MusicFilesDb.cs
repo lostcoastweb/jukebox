@@ -135,7 +135,7 @@ namespace Jukebox.Database
             try
             {
                 affectedRows = await _db.ExecuteAsync(sql,
-                new { path = file.Path, album = file.Album, artist = file.Artist, title = file.Title, year = file.Year, track_number = file.Track_Number });
+                new { path = file.Path, album = file.Album, artist = file.Artist, title = file.Title, year = file.Year, track_number = file.TrackNumber });
             }
             catch(Exception ex)
             {
@@ -174,7 +174,7 @@ namespace Jukebox.Database
                     { string.Format("artist{0}", counter), file.Artist },
                     { string.Format("title{0}", counter), file.Title },
                     { string.Format("year{0}", counter), file.Year.ToString() },
-                    { string.Format("track_number{0}", counter), file.Track_Number.ToString() }
+                    { string.Format("track_number{0}", counter), file.TrackNumber.ToString() }
                 };
 
                 sql.Append("(");
