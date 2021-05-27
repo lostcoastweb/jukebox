@@ -1,0 +1,32 @@
+name: .NET Unit Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Create database
+      uses: canastro/copy-action@0.0.2
+      with:
+        source: "./Jukebox/jukebox_blank.db"
+        target: "./Jukebox/jukebox.db"
+    - name: Build Library
+      run: dotnet build Jukebox --no-restore
+    - name: Build Unit Tests
+      run: dotnet build Jukebox.UnitTests --no-restore
+    - name: Test
+      run: dotnet test Jukebox.UnitTests --no-build --verbosity normal

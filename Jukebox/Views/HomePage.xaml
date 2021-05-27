@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Jukebox.Views.HomePage"
+             Title=""
+             >
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Command="{Binding PickMusicPathCommand}" Text="Select File"></Button>
+            <Button Command="{Binding MediaManager.ScanForMusicCommand}" Text="Scan For Music"></Button>
+            <Button Command="{Binding PlayMusicCommand}" Text="Play"></Button>
+            <Button Command="{Binding PauseMusicCommand}" Text="Pause"></Button>
+            <Button Command="{Binding PrevSongCommand}" Text="Previous Song"></Button>
+            <Button Command="{Binding NextSongCommand}" Text="Next Song"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
