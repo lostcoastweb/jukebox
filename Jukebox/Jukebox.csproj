@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -53,4 +53,8 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cd bin/Debug/netstandard2.0&#xD;&#xA;del /f /q Jukebox.dll&#xD;&#xA;del /f /q ref\Jukebox.dll&#xD;&#xA;cd ..\..\...\" />
+  </Target>
 </Project>

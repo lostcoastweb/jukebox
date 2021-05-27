@@ -1,4 +1,4 @@
-﻿using Jukebox.Database;
+using Jukebox.Database;
 using Jukebox.Models;
 using System;
 using System.Collections.Generic;
