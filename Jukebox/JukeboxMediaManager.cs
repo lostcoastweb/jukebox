@@ -64,20 +64,33 @@ namespace Jukebox.Library
             //get current song index in the playlist
             var index = CrossMediaManager.Current.Queue.CurrentIndex;
             var seekRate = 100 / (_currentPlaylist.Songs[index ].Duration.TotalSeconds);
-
+            var currentTime = 0.0 ;
 
             metaData.Add("Title", _currentPlaylist.Songs[index].Title);
-                metaData.Add("Artist", _currentPlaylist.Songs[index].Artist);
-                metaData.Add("Album", _currentPlaylist.Songs[index].Album);
-                metaData.Add("Duration", _currentPlaylist.Songs[index].Duration.ToString());
-                metaData.Add("durationSeconds", _currentPlaylist.Songs[index].Duration.Seconds.ToString());
-                metaData.Add("durationMinutes", _currentPlaylist.Songs[index].Duration.Minutes.ToString());
-                metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
-                metaData.Add("seekRate", seekRate.ToString());
+            metaData.Add("Artist", _currentPlaylist.Songs[index].Artist);
+            metaData.Add("Album", _currentPlaylist.Songs[index].Album);
+            metaData.Add("Duration", _currentPlaylist.Songs[index].Duration.ToString());
+            metaData.Add("durationSeconds", _currentPlaylist.Songs[index].Duration.Seconds.ToString());
+            metaData.Add("durationMinutes", _currentPlaylist.Songs[index].Duration.Minutes.ToString());
+            metaData.Add("isPlaying", CrossMediaManager.Current.IsPlaying().ToString());
+            metaData.Add("seekRate", seekRate.ToString());
+            try
+            {
+                currentTime = CrossMediaManager.Current.Position.TotalSeconds;
+
+            }catch(Exception e)
+            {
+
+            }
+
+
+            metaData.Add("currentTime", currentTime.ToString());
 
 
             return metaData;
         }
+
+       
 
         public Dictionary<string, string> getNextMetadata()
         {

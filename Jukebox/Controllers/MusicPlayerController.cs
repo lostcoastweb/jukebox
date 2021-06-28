@@ -42,6 +42,7 @@ namespace Jukebox.Controllers
         {
             JukeboxMediaManager.GetInstance().Play();
 
+
             return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 

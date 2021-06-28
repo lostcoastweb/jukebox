@@ -24,6 +24,11 @@ function moveSeekbar(seekRate) {
     console.log(seekbar.value);
   }, 1000);
 }
+function moveSeekbarToTime(time, seekrate){
+  const seekbar = document.getElementById("seekbar");
+  seekbar.value = 50;
+  moveSeekbar(seekrate);
+}
 
 function stopSeekbar() {
   clearInterval(move);
@@ -51,7 +56,8 @@ export function play(event) {
     .get(config.Routes.Play)
     .then((response) => {
       clearInterval(move);
-      moveSeekbar(response.data.seekRate);
+      //moveSeekbar(response.data.seekRate);
+      moveSeekbarToTime(response.data.currentTime, response.data.seekRate);
       console.log(response.data.Title);
       title.innerHTML = response.data.Title;
       artist.innerHTML = response.data.Artist;
