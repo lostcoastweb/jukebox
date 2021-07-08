@@ -38,12 +38,10 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/play")]
-        public Dictionary<string, string> PlayMusic()
+        public async Task<Dictionary<string, string>> PlayMusic()
         {
             JukeboxMediaManager.GetInstance().Play();
-
-
-            return JukeboxMediaManager.GetInstance().getCurrentMetadata();
+            return JukeboxMediaManager.GetInstance().getCurrentMetadata();    
         }
 
         [Route(HttpVerbs.Get, "/play/{id}")]
@@ -55,11 +53,9 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/pause")]
-        public Dictionary<string, string> PauseMusic()
+        public async Task<Dictionary<string, string>> PauseMusic()
         {
             JukeboxMediaManager.GetInstance().Pause();
-           
-
             return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 
@@ -106,7 +102,6 @@ namespace Jukebox.Controllers
         {
             if (CrossMediaManager.Current.IsPlaying())
             {
-                
                 await Task.Run(()=>playPrev());
             }
             else

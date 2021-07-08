@@ -14,8 +14,12 @@ var move;
 
 function moveSeekbar(seekRate) {
   const seekbar = document.getElementById("seekbar");
-  var durationSeconds = parseInt(document.getElementById("durationSecInfo").innerHTML);
-  var durationMinutes = parseInt(document.getElementById("durationMinInfo").innerHTML);
+  var durationSeconds = parseInt(
+    document.getElementById("durationSecInfo").innerHTML
+  );
+  var durationMinutes = parseInt(
+    document.getElementById("durationMinInfo").innerHTML
+  );
   //var totalSeconds = (durationMinutes*60)+durationSeconds;
   //var seekRate = parseFloat(100/totalSeconds);
   console.log("seekRate: " + seekRate);
@@ -24,9 +28,9 @@ function moveSeekbar(seekRate) {
     console.log(seekbar.value);
   }, 1000);
 }
-function moveSeekbarToTime(time, seekrate){
+function moveSeekbarToTime(time, seekrate) {
   const seekbar = document.getElementById("seekbar");
-  seekbar.value = 50;
+  seekbar.value = time;
   moveSeekbar(seekrate);
 }
 
@@ -45,8 +49,6 @@ export function play(event) {
   const durationSeconds = document.getElementById("durationSecInfo");
   const durationMinutes = document.getElementById("durationMinInfo");
 
-  
-
   playBtn.classList.add("hidden");
   playBtn.classList.remove("show");
   pauseBtn.classList.add("show");
@@ -57,6 +59,7 @@ export function play(event) {
     .then((response) => {
       clearInterval(move);
       //moveSeekbar(response.data.seekRate);
+      console.log("Current Time:" + response.data.currentTime);
       moveSeekbarToTime(response.data.currentTime, response.data.seekRate);
       console.log(response.data.Title);
       title.innerHTML = response.data.Title;
@@ -170,8 +173,7 @@ export function playPrev(event) {
       moveSeekbar(response.data.seekRate);
 
       console.log(response.data.isPlaying + "previous");
-      if(response.data )
-      seekbar.value = 0;
+      if (response.data) seekbar.value = 0;
 
       title.innerHTML = response.data.Title;
       artist.innerHTML = response.data.Artist;
@@ -298,7 +300,7 @@ function MusicPlayer() {
             min="0"
             max="100"
             defaultValue="0"
-            step = ".1"
+            step=".1"
             onChange={onSeek}
           />
 
