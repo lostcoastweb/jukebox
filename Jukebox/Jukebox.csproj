@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="EmbedIO" Version="3.4.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Plugin.MediaManager" Version="1.0.8" />
     <PackageReference Include="Plugin.MediaManager.Forms" Version="1.0.8" />
     <PackageReference Include="StandardStorage" Version="0.1.1" />
